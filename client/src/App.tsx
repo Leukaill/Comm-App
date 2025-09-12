@@ -21,29 +21,10 @@ import BottomNavigation from "@/components/BottomNavigation";
 import ThemeToggle from "@/components/ThemeToggle";
 
 function AuthenticatedApp() {
-  const [activeTab, setActiveTab] = useState("home");
-
-  const getCurrentPage = () => {
-    switch (activeTab) {
-      case "home":
-        return <Home />;
-      case "events":
-        return <Events />;
-      case "notes":
-        return <Notes />;
-      case "network":
-        return <Network />;
-      case "profile":
-        return <Profile />;
-      default:
-        return <Home />;
-    }
-  };
-
   return (
     <div className="flex flex-col h-screen bg-background">
       {/* Enhanced Header with glassmorphism */}
-      <header className="flex items-center justify-between p-4 bg-card/90 backdrop-blur-xl border-b border-border/50 relative overflow-hidden">
+      <header className="flex items-center justify-between p-4 bg-card/90 backdrop-blur-xl border-b border-border/50 relative overflow-hidden safe-area-inset-top">
         {/* Subtle animated background */}
         <div className="absolute inset-0 bg-gradient-to-r from-primary/5 via-transparent to-primary/5 opacity-50"></div>
         
@@ -52,7 +33,7 @@ function AuthenticatedApp() {
             <div className="absolute inset-0 bg-gradient-to-r from-primary/15 to-primary/5 rounded-xl blur-lg opacity-60"></div>
             <img 
               src={bpnLogoUrl} 
-              alt="BPN" 
+              alt="BPN Logo" 
               className="relative h-10 w-auto max-w-[100px] object-contain transition-all duration-300 hover:scale-105 filter drop-shadow-md dark:invert dark:hue-rotate-180"
             />
           </div>
@@ -63,16 +44,20 @@ function AuthenticatedApp() {
         </div>
       </header>
 
-      {/* Main content */}
+      {/* Main content with proper routing */}
       <main className="flex-1 overflow-hidden">
-        {getCurrentPage()}
+        <Switch>
+          <Route path="/" component={Home} />
+          <Route path="/events" component={Events} />
+          <Route path="/notes" component={Notes} />
+          <Route path="/network" component={Network} />
+          <Route path="/profile" component={Profile} />
+          <Route component={NotFound} />
+        </Switch>
       </main>
 
       {/* Bottom navigation */}
-      <BottomNavigation 
-        activeTab={activeTab} 
-        onTabChange={setActiveTab} 
-      />
+      <BottomNavigation />
     </div>
   );
 }

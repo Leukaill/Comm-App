@@ -1,18 +1,16 @@
 import { Home, Calendar, FileText, Users, User } from "lucide-react";
+import { Link, useLocation } from "wouter";
 import { cn } from "@/lib/utils";
 
-interface BottomNavigationProps {
-  activeTab: string;
-  onTabChange: (tab: string) => void;
-}
-
-export default function BottomNavigation({ activeTab, onTabChange }: BottomNavigationProps) {
+export default function BottomNavigation() {
+  const [location] = useLocation();
+  
   const tabs = [
-    { id: "home", icon: Home, label: "Home" },
-    { id: "events", icon: Calendar, label: "Events" },
-    { id: "notes", icon: FileText, label: "Notes" },
-    { id: "network", icon: Users, label: "Network" },
-    { id: "profile", icon: User, label: "Profile" },
+    { id: "home", path: "/", icon: Home, label: "Home" },
+    { id: "events", path: "/events", icon: Calendar, label: "Events" },
+    { id: "notes", path: "/notes", icon: FileText, label: "Notes" },
+    { id: "network", path: "/network", icon: Users, label: "Network" },
+    { id: "profile", path: "/profile", icon: User, label: "Profile" },
   ];
 
   return (
@@ -24,12 +22,12 @@ export default function BottomNavigation({ activeTab, onTabChange }: BottomNavig
         <div className="flex items-center justify-around px-1 py-2 relative">
           {tabs.map((tab, index) => {
             const Icon = tab.icon;
-            const isActive = activeTab === tab.id;
+            const isActive = location === tab.path;
             
             return (
-              <button
+              <Link
                 key={tab.id}
-                onClick={() => onTabChange(tab.id)}
+                href={tab.path}
                 data-testid={`tab-${tab.id}`}
                 className={cn(
                   "flex flex-col items-center gap-1.5 px-3 py-2 rounded-xl transition-all duration-300 min-h-[64px] flex-1 relative group",
@@ -75,7 +73,7 @@ export default function BottomNavigation({ activeTab, onTabChange }: BottomNavig
                 
                 {/* Ripple effect on tap */}
                 <div className="absolute inset-0 rounded-xl bg-primary/10 opacity-0 group-active:opacity-100 transition-opacity duration-150"></div>
-              </button>
+              </Link>
             );
           })}
         </div>
