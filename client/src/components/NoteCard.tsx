@@ -78,7 +78,7 @@ export default function NoteCard({
         <div className="absolute top-3 right-3 w-3 h-3 bg-primary rounded-full animate-pulse shadow-lg"></div>
       )}
 
-      <CardHeader className="pb-4 relative">
+      <CardHeader className="pb-3 sm:pb-4 p-3 sm:p-6 relative">
         <div className="flex items-start justify-between gap-3">
           <div className="flex items-start gap-3 flex-1 min-w-0">
             <div className={cn(
@@ -91,12 +91,12 @@ export default function NoteCard({
             </div>
             <div className="flex-1 min-w-0">
               <h3 className={cn(
-                "font-semibold text-base leading-tight mb-1",
+                "font-semibold text-sm sm:text-base leading-tight mb-1",
                 !isRead ? "text-foreground" : "text-muted-foreground"
               )}>
                 {title}
               </h3>
-              <p className="text-sm text-muted-foreground line-clamp-2 leading-relaxed">
+              <p className="text-xs sm:text-sm text-muted-foreground line-clamp-2 leading-relaxed">
                 {content}
               </p>
             </div>
@@ -110,7 +110,7 @@ export default function NoteCard({
         </div>
       </CardHeader>
       
-      <CardContent className="pt-0">
+      <CardContent className="pt-0 px-3 sm:px-6 pb-3 sm:pb-6">
         {/* Tags */}
         <div className="flex flex-wrap gap-2 mb-4">
           {tags.slice(0, 3).map((tag) => (

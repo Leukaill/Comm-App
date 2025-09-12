@@ -66,9 +66,9 @@ export default function Profile() {
 
   return (
     <div className="flex-1 flex flex-col h-full">
-      <header className="bg-card border-b border-border px-4 py-3">
+      <header className="bg-card border-b border-border px-4 sm:px-6 py-3 sm:py-4">
         <div className="flex items-center justify-between">
-          <h1 className="text-xl font-semibold" data-testid="page-title">
+          <h1 className="text-lg sm:text-xl font-semibold" data-testid="page-title">
             Profile
           </h1>
           <div className="flex gap-2">
@@ -93,7 +93,7 @@ export default function Profile() {
       </header>
 
       <ScrollArea className="flex-1">
-        <div className="p-4 space-y-6 pb-24">
+        <div className="p-4 sm:p-6 space-y-6 pb-[calc(env(safe-area-inset-bottom)+80px)] md:pb-8">
           {/* Profile Header */}
           <Card>
             <CardContent className="p-6">
@@ -108,7 +108,7 @@ export default function Profile() {
                 <div className="flex-1 min-w-0">
                   <div className="flex items-start justify-between gap-2 mb-2">
                     <div className="flex-1 min-w-0">
-                      <h2 className="text-xl font-bold" data-testid="text-user-name">
+                      <h2 className="text-lg sm:text-xl font-bold" data-testid="text-user-name">
                         {userProfile.name}
                       </h2>
                       <div className="flex items-center gap-1 text-muted-foreground text-sm mt-1">

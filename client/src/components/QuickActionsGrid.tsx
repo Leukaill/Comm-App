@@ -104,7 +104,7 @@ export default function QuickActionsGrid() {
       </div>
 
       {/* Actions grid */}
-      <div className="grid grid-cols-2 lg:grid-cols-4 gap-3">
+      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 xl:grid-cols-6 gap-3 sm:gap-4">
         {quickActions.map((action) => {
           const Icon = action.icon;
           
@@ -124,28 +124,28 @@ export default function QuickActionsGrid() {
               role="button"
               aria-label={`${action.title}: ${action.subtitle}`}
             >
-              <CardContent className="p-4">
+              <CardContent className="p-3 sm:p-4">
                 <div className={cn(
                   "relative overflow-hidden rounded-lg bg-gradient-to-br",
                   action.bgGradient
                 )}>
-                  <div className="p-4 text-center space-y-3">
+                  <div className="p-3 sm:p-4 text-center space-y-2 sm:space-y-3">
                     {/* Icon */}
                     <div className="flex justify-center">
                       <div className={cn(
                         "p-3 rounded-xl bg-white/50 dark:bg-black/20 backdrop-blur-sm",
                         action.color
                       )}>
-                        <Icon size={24} />
+                        <Icon className="w-5 h-5 sm:w-6 sm:h-6" />
                       </div>
                     </div>
                     
                     {/* Content */}
                     <div className="space-y-1">
-                      <h3 className="font-semibold text-foreground">
+                      <h3 className="font-semibold text-foreground text-sm sm:text-base">
                         {action.title}
                       </h3>
-                      <p className="text-xs text-muted-foreground">
+                      <p className="text-xs sm:text-sm text-muted-foreground">
                         {action.subtitle}
                       </p>
                     </div>

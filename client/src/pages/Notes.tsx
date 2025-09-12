@@ -84,7 +84,7 @@ export default function Notes() {
   return (
     <div className="flex-1 flex flex-col min-h-0 bg-gradient-to-br from-background via-background to-primary/5">
       {/* Enhanced Header with gradient background */}
-      <header className="relative overflow-hidden bg-gradient-to-r from-primary/10 via-background to-primary/10 border-b border-border/50 px-6 py-6">
+      <header className="relative overflow-hidden bg-gradient-to-r from-primary/10 via-background to-primary/10 border-b border-border/50 px-4 sm:px-6 py-4 sm:py-6">
         {/* Animated background elements */}
         <div className="absolute inset-0 bg-gradient-to-r from-primary/5 via-transparent to-primary/5 opacity-50"></div>
         <div className="absolute top-0 left-1/4 w-32 h-32 bg-primary/10 rounded-full blur-3xl opacity-30 animate-pulse"></div>
@@ -97,10 +97,10 @@ export default function Notes() {
               <FileText className="h-6 w-6 text-primary" />
             </div>
             <div>
-              <h1 className="text-2xl font-bold text-foreground" data-testid="page-title">
+              <h1 className="text-xl sm:text-2xl font-bold text-foreground" data-testid="page-title">
                 Notes
               </h1>
-              <p className="text-sm text-muted-foreground">Discover insights and stay informed</p>
+              <p className="text-xs sm:text-sm text-muted-foreground">Discover insights and stay informed</p>
             </div>
           </div>
           
@@ -123,7 +123,7 @@ export default function Notes() {
 
       <Tabs defaultValue="unread" className="flex-1 flex flex-col min-h-0">
         {/* Enhanced tabs with better styling */}
-        <div className="px-6 pt-4 pb-2">
+        <div className="px-4 sm:px-6 pt-4 pb-2">
           <TabsList className="grid w-full grid-cols-3 bg-muted/30 backdrop-blur-sm border border-border/30 rounded-xl p-1">
             <TabsTrigger 
               value="unread" 
@@ -156,7 +156,7 @@ export default function Notes() {
         </div>
 
         <TabsContent value="unread" className="flex-1 mt-0 overflow-y-auto">
-          <div className="px-6 space-y-4 pb-24">
+          <div className="px-4 sm:px-6 space-y-4 pb-[calc(env(safe-area-inset-bottom)+80px)] md:pb-6">
             {unreadNotes.length > 0 ? (
               unreadNotes.map((note, index) => (
                 <div
@@ -183,7 +183,7 @@ export default function Notes() {
         </TabsContent>
 
         <TabsContent value="all" className="flex-1 mt-0 overflow-y-auto">
-          <div className="px-6 space-y-4 pb-24">
+          <div className="px-4 sm:px-6 space-y-4 pb-[calc(env(safe-area-inset-bottom)+80px)] md:pb-6">
             {filteredNotes.map((note, index) => (
               <div
                 key={note.id}
@@ -200,7 +200,7 @@ export default function Notes() {
         </TabsContent>
 
         <TabsContent value="read" className="flex-1 mt-0 overflow-y-auto">
-          <div className="px-6 space-y-4 pb-24">
+          <div className="px-4 sm:px-6 space-y-4 pb-[calc(env(safe-area-inset-bottom)+80px)] md:pb-6">
             {readNotes.length > 0 ? (
               readNotes.map((note, index) => (
                 <div

@@ -66,17 +66,17 @@ export default function BPNStatsSection() {
   return (
     <div className="space-y-4">
       {/* Section header */}
-      <div className="text-center space-y-2">
-        <h2 className="text-2xl font-bold bg-gradient-to-r from-primary to-primary/80 bg-clip-text text-transparent">
+      <div className="text-center space-y-2 sm:space-y-3">
+        <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold bg-gradient-to-r from-primary to-primary/80 bg-clip-text text-transparent">
           Our Impact
         </h2>
-        <p className="text-muted-foreground text-sm">
+        <p className="text-muted-foreground text-sm sm:text-base">
           Real numbers, real impact across the globe
         </p>
       </div>
 
       {/* Stats grid */}
-      <div className="grid grid-cols-2 lg:grid-cols-3 gap-3">
+      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-3 sm:gap-4">
         {stats.map((stat, index) => {
           const Icon = stat.icon;
           
@@ -86,17 +86,17 @@ export default function BPNStatsSection() {
               data-testid={`card-stat-${stat.label.toLowerCase().replace(/\s+/g, '-')}`}
               className="hover-elevate active-elevate-2 bg-gradient-to-br from-card/95 to-card/80 backdrop-blur-sm border-border/50 shadow-lg hover:shadow-xl transition-all duration-300"
             >
-              <CardContent className="p-4">
+              <CardContent className="p-3 sm:p-4 lg:p-5">
                 <div className="flex items-start justify-between">
                   <div className="space-y-2">
                     <div className={`p-2 rounded-lg bg-gradient-to-br from-background/50 to-background/30 ${stat.color}`}>
-                      <Icon size={20} />
+                      <Icon className="w-4 h-4 sm:w-5 sm:h-5" />
                     </div>
                     <div>
-                      <div className="text-2xl font-bold text-foreground">
+                      <div className="text-lg sm:text-xl lg:text-2xl font-bold text-foreground">
                         {stat.value}
                       </div>
-                      <div className="text-xs text-muted-foreground font-medium">
+                      <div className="text-xs sm:text-sm text-muted-foreground font-medium">
                         {stat.label}
                       </div>
                     </div>

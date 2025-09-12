@@ -88,7 +88,7 @@ export default function EventCard({
       data-testid={`event-card-${title.toLowerCase().replace(/\s+/g, '-')}`}
     >
       {/* Hero Image Section */}
-      <div className="relative h-40 bg-gradient-to-br from-blue-500 to-purple-600 overflow-hidden">
+      <div className="relative h-32 sm:h-40 md:h-44 bg-gradient-to-br from-blue-500 to-purple-600 overflow-hidden">
         <img 
           src={getEventImage()}
           alt={title}
@@ -112,21 +112,21 @@ export default function EventCard({
       </div>
 
       {/* Content Section */}
-      <CardContent className="p-4">
+      <CardContent className="p-3 sm:p-4 lg:p-5">
         <div className="space-y-3">
           {/* Title and Time */}
           <div>
-            <h3 className="font-semibold text-lg leading-tight mb-1">
+            <h3 className="font-semibold text-base sm:text-lg leading-tight mb-1">
               {title}
             </h3>
-            <p className="text-sm text-muted-foreground">
+            <p className="text-xs sm:text-sm text-muted-foreground">
               {time}
             </p>
           </div>
 
           {/* Location and Distance */}
           <div className="flex items-center gap-1.5 text-sm text-muted-foreground">
-            <MapPin size={14} />
+            <MapPin className="w-3 h-3 sm:w-4 sm:h-4" />
             <span className="truncate flex-1">{location}</span>
             <span className="text-blue-600 font-medium">{getLocationDistance()}</span>
           </div>

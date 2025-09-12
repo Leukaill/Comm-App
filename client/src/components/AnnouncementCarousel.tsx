@@ -137,7 +137,7 @@ export default function AnnouncementCarousel() {
       <Card className="overflow-hidden bg-gradient-to-br from-card/95 to-card/80 backdrop-blur-sm border-border/50 shadow-2xl shadow-primary/10">
         <CardContent className="p-0 relative">
           {/* Main slide container */}
-          <div className="relative h-64 md:h-80 overflow-hidden">
+          <div className="relative h-48 sm:h-64 md:h-80 lg:h-96 overflow-hidden">
             {/* Background image with overlay */}
             <div 
               className="absolute inset-0 bg-cover bg-center transition-all duration-700 ease-in-out transform"
@@ -151,7 +151,7 @@ export default function AnnouncementCarousel() {
             </div>
 
             {/* Content overlay */}
-            <div className="relative z-10 h-full flex flex-col justify-end p-6 text-white">
+            <div className="relative z-10 h-full flex flex-col justify-end p-4 sm:p-6 lg:p-8 text-white">
               {/* Type badge */}
               <div className="flex items-center gap-2 mb-3">
                 <div className={cn("p-1.5 rounded-lg", config.color)}>
@@ -168,16 +168,16 @@ export default function AnnouncementCarousel() {
               </div>
 
               {/* Title and description */}
-              <h3 className="text-2xl md:text-3xl font-bold mb-2 leading-tight drop-shadow-lg">
+              <h3 className="text-lg sm:text-xl md:text-2xl lg:text-3xl font-bold mb-2 leading-tight drop-shadow-lg">
                 {currentSlideData.title}
               </h3>
-              <p className="text-lg opacity-90 mb-4 leading-relaxed drop-shadow-md max-w-2xl">
+              <p className="text-sm sm:text-base md:text-lg opacity-90 mb-3 sm:mb-4 leading-relaxed drop-shadow-md max-w-2xl">
                 {currentSlideData.description}
               </p>
 
               {/* Date and action */}
               <div className="flex items-center justify-between">
-                <span className="text-sm opacity-75 font-medium">
+                <span className="text-xs sm:text-sm opacity-75 font-medium">
                   {currentSlideData.date}
                 </span>
                 {currentSlideData.actionLabel && (

@@ -106,13 +106,13 @@ export default function Network() {
 
   return (
     <div className="flex-1 flex flex-col h-full">
-      <header className="bg-card border-b border-border px-4 py-3 space-y-3">
-        <h1 className="text-xl font-semibold" data-testid="page-title">
+      <header className="bg-card border-b border-border px-4 sm:px-6 py-3 sm:py-4 space-y-3">
+        <h1 className="text-lg sm:text-xl font-semibold" data-testid="page-title">
           Network
         </h1>
         
         <div className="relative">
-          <Search size={20} className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground" />
+          <Search className="w-4 h-4 sm:w-5 sm:h-5 absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground" />
           <Input
             placeholder="Search professionals..."
             value={searchQuery}

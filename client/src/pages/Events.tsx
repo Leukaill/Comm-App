@@ -117,9 +117,9 @@ export default function Events() {
 
   return (
     <div className="flex-1 flex flex-col h-full bg-background">
-      <header className="bg-card border-b border-border px-4 py-4 shrink-0">
+      <header className="bg-card border-b border-border px-4 sm:px-6 lg:px-8 py-3 sm:py-4 shrink-0">
         <div className="flex items-center justify-between">
-          <h1 className="text-xl font-semibold" data-testid="page-title">
+          <h1 className="text-xl sm:text-2xl lg:text-3xl font-semibold" data-testid="page-title">
             Events
           </h1>
           <Dialog open={showCalendar} onOpenChange={setShowCalendar}>
@@ -195,8 +195,8 @@ export default function Events() {
       </header>
 
       <Tabs defaultValue="upcoming" className="flex-1 flex flex-col min-h-0">
-        <div className="px-4 pt-3 pb-2 shrink-0">
-          <TabsList className="grid w-full grid-cols-2">
+        <div className="px-4 sm:px-6 lg:px-8 pt-3 pb-2 shrink-0">
+          <TabsList className="grid w-full grid-cols-2 h-10 sm:h-11">
             <TabsTrigger value="upcoming" data-testid="tab-upcoming">
               Upcoming
             </TabsTrigger>
@@ -208,7 +208,7 @@ export default function Events() {
 
         <TabsContent value="upcoming" className="flex-1 min-h-0">
           <div className="h-full overflow-y-auto">
-            <div className="p-4 space-y-4 pb-24">
+            <div className="container mx-auto max-w-screen-2xl p-4 sm:p-6 lg:p-8 space-y-4 sm:space-y-6 pb-[calc(env(safe-area-inset-bottom)+80px)] md:pb-6">
               {upcomingEvents.map((event) => (
                 <EventCard
                   key={event.id}
@@ -223,7 +223,7 @@ export default function Events() {
 
         <TabsContent value="past" className="flex-1 min-h-0">
           <div className="h-full overflow-y-auto">
-            <div className="p-4 space-y-4 pb-24">
+            <div className="container mx-auto max-w-screen-2xl p-4 sm:p-6 lg:p-8 space-y-4 sm:space-y-6 pb-[calc(env(safe-area-inset-bottom)+80px)] md:pb-6">
               {pastEvents.map((event) => (
                 <EventCard
                   key={event.id}

@@ -78,7 +78,7 @@ export default function ConnectionCard({
       {/* Subtle gradient overlay */}
       <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-secondary/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
       
-      <CardContent className="p-5 relative">
+      <CardContent className="p-3 sm:p-5 relative">
         <div className="flex items-start gap-4">
           <div className="relative">
             <UserAvatar 
@@ -91,13 +91,13 @@ export default function ConnectionCard({
             />
             {/* Professional badge indicator */}
             <div className="absolute -top-1 -right-1 w-5 h-5 bg-gradient-to-r from-primary to-primary/80 rounded-full flex items-center justify-center shadow-lg">
-              <Briefcase size={10} className="text-primary-foreground" />
+              <Briefcase className="w-2 h-2 sm:w-2.5 sm:h-2.5 text-primary-foreground" />
             </div>
           </div>
           
           <div className="flex-1 min-w-0 space-y-3">
             <div className="space-y-1.5">
-              <h3 className="font-bold text-base leading-tight truncate text-foreground group-hover:text-primary transition-colors duration-300">
+              <h3 className="font-bold text-sm sm:text-base leading-tight truncate text-foreground group-hover:text-primary transition-colors duration-300">
                 {name}
               </h3>
               <div className="flex items-center gap-1.5 text-sm text-muted-foreground">
