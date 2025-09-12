@@ -14,7 +14,7 @@ export default function BottomNavigation() {
   ];
 
   return (
-    <div className="fixed bottom-0 left-0 right-0 bg-card/95 backdrop-blur-xl border-t border-border/50 safe-area-inset-bottom shadow-2xl shadow-primary/5">
+    <nav role="navigation" aria-label="Primary navigation" className="fixed bottom-0 left-0 right-0 bg-card/95 backdrop-blur-xl border-t border-border/50 safe-area-inset-bottom shadow-2xl shadow-primary/5">
       <div className="relative">
         {/* Gradient overlay */}
         <div className="absolute inset-0 bg-gradient-to-t from-background/20 to-transparent pointer-events-none"></div>
@@ -29,6 +29,7 @@ export default function BottomNavigation() {
                 key={tab.id}
                 href={tab.path}
                 data-testid={`tab-${tab.id}`}
+                aria-current={isActive ? "page" : undefined}
                 className={cn(
                   "flex flex-col items-center gap-1.5 px-3 py-2 rounded-xl transition-all duration-300 min-h-[64px] flex-1 relative group",
                   isActive 
@@ -78,6 +79,6 @@ export default function BottomNavigation() {
           })}
         </div>
       </div>
-    </div>
+    </nav>
   );
 }

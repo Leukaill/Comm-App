@@ -83,6 +83,7 @@ export default function BPNStatsSection() {
           return (
             <Card 
               key={index}
+              data-testid={`card-stat-${stat.label.toLowerCase().replace(/\s+/g, '-')}`}
               className="hover-elevate active-elevate-2 bg-gradient-to-br from-card/95 to-card/80 backdrop-blur-sm border-border/50 shadow-lg hover:shadow-xl transition-all duration-300"
             >
               <CardContent className="p-4">

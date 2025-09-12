@@ -111,6 +111,7 @@ export default function QuickActionsGrid() {
           return (
             <Card 
               key={action.id}
+              data-testid={`card-action-${action.id}`}
               className="hover-elevate active-elevate-2 cursor-pointer transition-all duration-300"
               onClick={action.action}
             >
