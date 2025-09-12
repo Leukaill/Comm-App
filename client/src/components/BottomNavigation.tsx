@@ -21,18 +21,24 @@ export default function BottomNavigation() {
 
   // Update indicator position when route changes
   useEffect(() => {
-    const activeIndex = allTabs.findIndex(tab => tab.path === location);
-    if (activeIndex !== -1 && tabsRef.current[activeIndex] && containerRef.current) {
-      const activeTab = tabsRef.current[activeIndex];
-      const container = containerRef.current;
-      const tabRect = activeTab.getBoundingClientRect();
-      const containerRect = container.getBoundingClientRect();
-      
-      setIndicatorStyle({
-        left: tabRect.left - containerRect.left + 4, // 4px padding adjustment
-        width: tabRect.width - 8, // 8px total padding
-      });
-    }
+    const updateIndicator = () => {
+      const activeIndex = allTabs.findIndex(tab => tab.path === location);
+      if (activeIndex !== -1 && tabsRef.current[activeIndex] && containerRef.current) {
+        const activeTab = tabsRef.current[activeIndex];
+        const container = containerRef.current;
+        const tabRect = activeTab.getBoundingClientRect();
+        const containerRect = container.getBoundingClientRect();
+        
+        setIndicatorStyle({
+          left: tabRect.left - containerRect.left + 4,
+          width: tabRect.width - 8,
+        });
+      }
+    };
+
+    // Add small delay to ensure DOM is ready
+    const timeoutId = setTimeout(updateIndicator, 50);
+    return () => clearTimeout(timeoutId);
   }, [location]);
 
   // Handle resize
@@ -72,13 +78,13 @@ export default function BottomNavigation() {
             ref={(el) => (tabsRef.current[index] = el)}
             data-testid={`tab-${tab.id}`}
             aria-label="Open more features"
-            className="flex items-center justify-center w-12 h-12 rounded-full transition-all duration-300 ease-out group"
+            className="flex items-center justify-center w-12 h-12 rounded-full transition-all duration-200 ease-out group active:scale-90"
           >
             <Icon 
               size={22} 
               className={cn(
-                "transition-all duration-300 ease-out transform-gpu",
-                "text-zinc-400 hover:text-white group-hover:scale-105 group-active:scale-95"
+                "transition-all duration-200 ease-out",
+                "text-zinc-400 hover:text-white hover:scale-110 group-active:scale-90"
               )}
             />
           </button>
@@ -93,16 +99,16 @@ export default function BottomNavigation() {
         href={tab.path}
         data-testid={`tab-${tab.id}`}
         aria-current={isActive ? "page" : undefined}
-        className="flex items-center justify-center w-12 h-12 rounded-full transition-all duration-300 ease-out relative group"
+        className="flex items-center justify-center w-12 h-12 rounded-full transition-all duration-200 ease-out relative group active:scale-90"
       >
         <div ref={(el) => (tabsRef.current[index] = el)}>
           <Icon 
             size={22} 
             className={cn(
-              "transition-all duration-300 ease-out transform-gpu",
+              "transition-all duration-200 ease-out",
               isActive 
-                ? "text-white scale-105" 
-                : "text-zinc-400 hover:text-white group-hover:scale-105 group-active:scale-95"
+                ? "text-white scale-110 drop-shadow-lg" 
+                : "text-zinc-400 hover:text-white hover:scale-110 group-active:scale-90"
             )}
           />
         </div>
@@ -117,10 +123,12 @@ export default function BottomNavigation() {
         <div className="bg-zinc-900/85 backdrop-blur-xl border border-white/10 rounded-full px-2 py-2 shadow-lg">
           {/* Sliding indicator */}
           <div 
-            className="absolute top-1 bottom-1 rounded-full bg-white/8 transition-[left,width] duration-200 ease-out pointer-events-none"
+            className="absolute top-1 bottom-1 rounded-full bg-white/12 transition-all duration-300 ease-out pointer-events-none shadow-lg"
             style={{
               left: indicatorStyle.left,
               width: indicatorStyle.width,
+              transform: indicatorStyle.width > 0 ? 'scale(1)' : 'scale(0.8)',
+              opacity: indicatorStyle.width > 0 ? 1 : 0,
             }}
           />
 
