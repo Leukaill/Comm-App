@@ -88,11 +88,11 @@ export default function LoginCard({ onLogin, isLoading = false }: LoginCardProps
             {/* Logo */}
             <div className="flex justify-center mb-12">
               <div className="relative">
-                <div className="absolute inset-0 w-20 h-20 bg-[hsl(var(--geometric-primary))] rounded-2xl blur-xl opacity-20"></div>
+                <div className="absolute inset-0 w-20 h-20 bg-white/10 rounded-2xl blur-xl opacity-40"></div>
                 <img 
                   src={bpnLogoUrl} 
                   alt="BPN" 
-                  className="relative h-20 w-auto max-w-[140px] object-contain dark:invert transition-all duration-300 hover:scale-105"
+                  className="relative h-20 w-auto max-w-[140px] object-contain transition-all duration-300 hover:scale-105 filter drop-shadow-md"
                 />
               </div>
             </div>
