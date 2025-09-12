@@ -41,17 +41,29 @@ function AuthenticatedApp() {
 
   return (
     <div className="flex flex-col h-screen bg-background">
-      {/* Header with theme toggle */}
-      <header className="flex items-center justify-between p-4 bg-card border-b border-border">
-        <div className="flex items-center gap-3">
-          <img 
-            src="/assets/generated_images/BPN_professional_logo_design_2993b4ca.png" 
-            alt="BPN" 
-            className="h-8 w-8 rounded-md"
-          />
-          <span className="font-semibold text-lg">BPN</span>
+      {/* Enhanced Header with glassmorphism */}
+      <header className="flex items-center justify-between p-4 bg-card/90 backdrop-blur-xl border-b border-border/50 relative overflow-hidden">
+        {/* Subtle animated background */}
+        <div className="absolute inset-0 bg-gradient-to-r from-primary/5 via-transparent to-primary/5 opacity-50"></div>
+        
+        <div className="flex items-center gap-3 relative z-10">
+          <div className="relative">
+            <div className="absolute inset-0 bg-gradient-to-r from-primary/30 to-primary/10 rounded-lg blur-md"></div>
+            <img 
+              src="/assets/generated_images/BPN_professional_logo_design_2993b4ca.png" 
+              alt="BPN" 
+              className="relative h-10 w-10 rounded-lg shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-110"
+            />
+          </div>
+          <div className="space-y-0.5">
+            <span className="font-bold text-xl bg-gradient-to-r from-primary to-primary/80 bg-clip-text text-transparent">BPN</span>
+            <div className="text-xs text-muted-foreground font-medium">Professional Network</div>
+          </div>
         </div>
-        <ThemeToggle />
+        
+        <div className="relative z-10">
+          <ThemeToggle />
+        </div>
       </header>
 
       {/* Main content */}

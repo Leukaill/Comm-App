@@ -36,21 +36,35 @@ export default function FloatingActionButton({ type, onClick, className }: Float
   };
 
   return (
-    <Button
-      onClick={() => {
-        onClick();
-        console.log(`${getLabel()} clicked`);
-      }}
-      data-testid={`fab-${type}`}
-      className={cn(
-        "fixed bottom-20 right-4 h-14 w-14 rounded-full shadow-lg hover:shadow-xl transition-all z-50",
-        "hover:scale-105 active:scale-95",
-        className
-      )}
-      size="icon"
-    >
-      {getIcon()}
-      <span className="sr-only">{getLabel()}</span>
-    </Button>
+    <div className="fixed bottom-20 right-4 z-50">
+      {/* Glow effect */}
+      <div className="absolute inset-0 bg-gradient-to-r from-primary to-primary/80 rounded-full blur-xl opacity-40 animate-pulse"></div>
+      
+      <Button
+        onClick={() => {
+          onClick();
+          console.log(`${getLabel()} clicked`);
+        }}
+        data-testid={`fab-${type}`}
+        className={cn(
+          "relative h-16 w-16 rounded-full shadow-2xl shadow-primary/30 hover:shadow-3xl hover:shadow-primary/50 transition-all duration-300 z-10",
+          "bg-gradient-to-r from-primary via-primary to-primary/90 hover:from-primary/90 hover:via-primary hover:to-primary",
+          "hover:scale-110 active:scale-95 group",
+          "border-4 border-white/20 dark:border-black/20",
+          className
+        )}
+        size="icon"
+      >
+        {/* Icon with enhanced animation */}
+        <div className="relative">
+          {getIcon()}
+          <div className="absolute inset-0 bg-white/20 rounded-full opacity-0 group-hover:opacity-100 group-hover:animate-ping"></div>
+        </div>
+        <span className="sr-only">{getLabel()}</span>
+        
+        {/* Ripple effect on click */}
+        <div className="absolute inset-0 rounded-full bg-white/30 opacity-0 group-active:opacity-100 group-active:animate-ping"></div>
+      </Button>
+    </div>
   );
 }
