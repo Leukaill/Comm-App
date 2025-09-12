@@ -90,15 +90,15 @@ export default function Events() {
   };
 
   return (
-    <div className="flex-1 flex flex-col h-full">
-      <header className="bg-card border-b border-border px-4 py-3">
+    <div className="flex-1 flex flex-col h-full bg-background">
+      <header className="bg-card border-b border-border px-4 py-4 shrink-0">
         <h1 className="text-xl font-semibold" data-testid="page-title">
           Events
         </h1>
       </header>
 
-      <Tabs defaultValue="upcoming" className="flex-1 flex flex-col">
-        <div className="px-4 pt-2">
+      <Tabs defaultValue="upcoming" className="flex-1 flex flex-col min-h-0">
+        <div className="px-4 pt-3 pb-2 shrink-0">
           <TabsList className="grid w-full grid-cols-2">
             <TabsTrigger value="upcoming" data-testid="tab-upcoming">
               Upcoming
@@ -109,8 +109,8 @@ export default function Events() {
           </TabsList>
         </div>
 
-        <TabsContent value="upcoming" className="flex-1 mt-0">
-          <ScrollArea className="h-full">
+        <TabsContent value="upcoming" className="flex-1 min-h-0">
+          <div className="h-full overflow-y-auto">
             <div className="p-4 space-y-4 pb-24">
               {upcomingEvents.map((event) => (
                 <EventCard
@@ -121,11 +121,11 @@ export default function Events() {
                 />
               ))}
             </div>
-          </ScrollArea>
+          </div>
         </TabsContent>
 
-        <TabsContent value="past" className="flex-1 mt-0">
-          <ScrollArea className="h-full">
+        <TabsContent value="past" className="flex-1 min-h-0">
+          <div className="h-full overflow-y-auto">
             <div className="p-4 space-y-4 pb-24">
               {pastEvents.map((event) => (
                 <EventCard
@@ -136,7 +136,7 @@ export default function Events() {
                 />
               ))}
             </div>
-          </ScrollArea>
+          </div>
         </TabsContent>
       </Tabs>
     </div>

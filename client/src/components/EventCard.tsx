@@ -4,6 +4,13 @@ import { Badge } from "@/components/ui/badge";
 import { MapPin, Users } from "lucide-react";
 import { cn } from "@/lib/utils";
 
+// Import images
+import networkingImage from "@assets/generated_images/Business_networking_event_photo_ca3a4065.png";
+import workshopImage from "@assets/generated_images/Platform_technology_update_c5bd0381.png";
+import summitImage from "@assets/generated_images/BPN_Summit_conference_event_460b63ec.png";
+import partnershipImage from "@assets/generated_images/Business_partnership_program_ed21ecb5.png";
+import celebrationImage from "@assets/generated_images/50K_members_milestone_celebration_5748fd5a.png";
+
 interface EventCardProps {
   id: string;
   title: string;
@@ -44,6 +51,16 @@ export default function EventCard({
 
   const { day, month } = parseDate(date);
 
+  // Map titles to imported images
+  const getEventImage = () => {
+    if (title.includes('Networking')) return networkingImage;
+    if (title.includes('Workshop') || title.includes('Marketing')) return workshopImage;
+    if (title.includes('Summit') || title.includes('Leadership')) return summitImage;
+    if (title.includes('Review') || title.includes('Business')) return partnershipImage;
+    if (title.includes('Social') || title.includes('Summer')) return celebrationImage;
+    return networkingImage; // fallback
+  };
+
   const getRSVPText = () => {
     switch (rsvpStatus) {
       case "going":
@@ -72,13 +89,11 @@ export default function EventCard({
     >
       {/* Hero Image Section */}
       <div className="relative h-40 bg-gradient-to-br from-blue-500 to-purple-600 overflow-hidden">
-        {imageUrl && (
-          <img 
-            src={imageUrl}
-            alt={title}
-            className="w-full h-full object-cover"
-          />
-        )}
+        <img 
+          src={getEventImage()}
+          alt={title}
+          className="w-full h-full object-cover"
+        />
         
         {/* Date Badge */}
         <div className="absolute top-3 left-3 bg-white rounded-lg p-2 shadow-md min-w-[48px] text-center">
