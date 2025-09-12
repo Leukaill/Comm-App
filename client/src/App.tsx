@@ -46,7 +46,7 @@ function AuthenticatedApp() {
         {/* Subtle animated background */}
         <div className="absolute inset-0 bg-gradient-to-r from-primary/5 via-transparent to-primary/5 opacity-50"></div>
         
-        <div className="flex items-center gap-3 relative z-10">
+        <div className="relative z-10">
           <div className="relative">
             <div className="absolute inset-0 bg-gradient-to-r from-primary/30 to-primary/10 rounded-lg blur-md"></div>
             <img 
@@ -54,10 +54,6 @@ function AuthenticatedApp() {
               alt="BPN" 
               className="relative h-8 w-auto max-w-[80px] rounded-lg shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-110 object-contain"
             />
-          </div>
-          <div className="space-y-0.5">
-            <span className="font-bold text-xl bg-gradient-to-r from-primary to-primary/80 bg-clip-text text-transparent">BPN</span>
-            <div className="text-xs text-muted-foreground font-medium">Professional Network</div>
           </div>
         </div>
         
