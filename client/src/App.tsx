@@ -50,7 +50,7 @@ function AuthenticatedApp() {
           <div className="relative">
             <div className="absolute inset-0 bg-gradient-to-r from-primary/30 to-primary/10 rounded-lg blur-md"></div>
             <img 
-              src="/assets/generated_images/BPN_professional_logo_design_2993b4ca.png" 
+              src="/assets/logo_1757666405625.png" 
               alt="BPN" 
               className="relative h-10 w-10 rounded-lg shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-110"
             />

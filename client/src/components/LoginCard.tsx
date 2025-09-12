@@ -3,7 +3,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useState } from "react";
-import bpnLogoUrl from "@assets/generated_images/BPN_professional_logo_design_2993b4ca.png";
+import bpnLogoUrl from "@assets/logo_1757666405625.png";
 
 interface LoginCardProps {
   onLogin: (email: string, password: string) => void;
