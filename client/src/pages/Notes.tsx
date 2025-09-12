@@ -3,7 +3,7 @@ import NoteCard from "@/components/NoteCard";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Input } from "@/components/ui/input";
-import { Search } from "lucide-react";
+import { Search, FileText, Sparkles } from "lucide-react";
 
 export default function Notes() {
   const [searchQuery, setSearchQuery] = useState("");
@@ -82,91 +82,154 @@ export default function Notes() {
   };
 
   return (
-    <div className="flex-1 flex flex-col h-full">
-      <header className="bg-card border-b border-border px-4 py-3 space-y-3">
-        <h1 className="text-xl font-semibold" data-testid="page-title">
-          Notes
-        </h1>
+    <div className="flex-1 flex flex-col h-full bg-gradient-to-br from-background via-background to-primary/5">
+      {/* Enhanced Header with gradient background */}
+      <header className="relative overflow-hidden bg-gradient-to-r from-primary/10 via-background to-primary/10 border-b border-border/50 px-6 py-6">
+        {/* Animated background elements */}
+        <div className="absolute inset-0 bg-gradient-to-r from-primary/5 via-transparent to-primary/5 opacity-50"></div>
+        <div className="absolute top-0 left-1/4 w-32 h-32 bg-primary/10 rounded-full blur-3xl opacity-30 animate-pulse"></div>
+        <div className="absolute bottom-0 right-1/4 w-24 h-24 bg-primary/15 rounded-full blur-2xl opacity-40 animate-pulse delay-1000"></div>
         
-        <div className="relative">
-          <Search size={20} className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground" />
-          <Input
-            placeholder="Search notes..."
-            value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
-            data-testid="input-search-notes"
-            className="pl-10"
-          />
+        <div className="relative z-10 space-y-4">
+          {/* Title with icon */}
+          <div className="flex items-center gap-3">
+            <div className="p-2 bg-primary/15 rounded-xl">
+              <FileText className="h-6 w-6 text-primary" />
+            </div>
+            <div>
+              <h1 className="text-2xl font-bold text-foreground" data-testid="page-title">
+                Notes
+              </h1>
+              <p className="text-sm text-muted-foreground">Discover insights and stay informed</p>
+            </div>
+          </div>
+          
+          {/* Enhanced search bar */}
+          <div className="relative">
+            <div className="absolute inset-0 bg-gradient-to-r from-primary/5 to-transparent rounded-xl blur-sm"></div>
+            <div className="relative bg-background/80 backdrop-blur-xl rounded-xl border border-border/50 shadow-lg">
+              <Search size={20} className="absolute left-4 top-1/2 transform -translate-y-1/2 text-primary/70" />
+              <Input
+                placeholder="Search notes, topics, categories..."
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                data-testid="input-search-notes"
+                className="pl-12 pr-4 py-3 bg-transparent border-0 focus:ring-0 placeholder:text-muted-foreground/60 text-foreground"
+              />
+            </div>
+          </div>
         </div>
       </header>
 
       <Tabs defaultValue="unread" className="flex-1 flex flex-col">
-        <div className="px-4 pt-2">
-          <TabsList className="grid w-full grid-cols-3">
-            <TabsTrigger value="unread" data-testid="tab-unread">
-              Unread ({unreadNotes.length})
+        {/* Enhanced tabs with better styling */}
+        <div className="px-6 pt-4 pb-2">
+          <TabsList className="grid w-full grid-cols-3 bg-muted/30 backdrop-blur-sm border border-border/30 rounded-xl p-1">
+            <TabsTrigger 
+              value="unread" 
+              data-testid="tab-unread"
+              className="rounded-lg data-[state=active]:bg-background data-[state=active]:shadow-md transition-all duration-200"
+            >
+              <div className="flex items-center gap-2">
+                <div className="w-2 h-2 bg-primary rounded-full animate-pulse"></div>
+                <span className="font-medium">Unread</span>
+                <span className="text-xs bg-primary/20 text-primary px-2 py-0.5 rounded-full font-semibold">
+                  {unreadNotes.length}
+                </span>
+              </div>
             </TabsTrigger>
-            <TabsTrigger value="all" data-testid="tab-all">
-              All Notes
+            <TabsTrigger 
+              value="all" 
+              data-testid="tab-all"
+              className="rounded-lg data-[state=active]:bg-background data-[state=active]:shadow-md transition-all duration-200"
+            >
+              <span className="font-medium">All Notes</span>
             </TabsTrigger>
-            <TabsTrigger value="read" data-testid="tab-read">
-              Read
+            <TabsTrigger 
+              value="read" 
+              data-testid="tab-read"
+              className="rounded-lg data-[state=active]:bg-background data-[state=active]:shadow-md transition-all duration-200"
+            >
+              <span className="font-medium">Read</span>
             </TabsTrigger>
           </TabsList>
         </div>
 
         <TabsContent value="unread" className="flex-1 mt-0">
-          <ScrollArea className="h-full">
-            <div className="p-4 space-y-4 pb-24">
+          <div className="h-full overflow-y-auto">
+            <div className="px-6 space-y-4 pb-24">
               {unreadNotes.length > 0 ? (
-                unreadNotes.map((note) => (
-                  <NoteCard
+                unreadNotes.map((note, index) => (
+                  <div
                     key={note.id}
-                    {...note}
-                    onClick={() => handleNoteClick(note.id)}
-                  />
+                    className="animate-in slide-in-from-bottom-4 duration-300"
+                    style={{ animationDelay: `${index * 100}ms` }}
+                  >
+                    <NoteCard
+                      {...note}
+                      onClick={() => handleNoteClick(note.id)}
+                    />
+                  </div>
                 ))
               ) : (
-                <div className="text-center py-8">
-                  <p className="text-muted-foreground">No unread notes</p>
+                <div className="text-center py-16">
+                  <div className="mb-4">
+                    <Sparkles className="h-16 w-16 text-muted-foreground/30 mx-auto" />
+                  </div>
+                  <h3 className="text-lg font-semibold text-foreground mb-2">All caught up!</h3>
+                  <p className="text-muted-foreground">No unread notes to display</p>
                 </div>
               )}
             </div>
-          </ScrollArea>
+          </div>
         </TabsContent>
 
         <TabsContent value="all" className="flex-1 mt-0">
-          <ScrollArea className="h-full">
-            <div className="p-4 space-y-4 pb-24">
-              {filteredNotes.map((note) => (
-                <NoteCard
+          <div className="h-full overflow-y-auto">
+            <div className="px-6 space-y-4 pb-24">
+              {filteredNotes.map((note, index) => (
+                <div
                   key={note.id}
-                  {...note}
-                  onClick={() => handleNoteClick(note.id)}
-                />
-              ))}
-            </div>
-          </ScrollArea>
-        </TabsContent>
-
-        <TabsContent value="read" className="flex-1 mt-0">
-          <ScrollArea className="h-full">
-            <div className="p-4 space-y-4 pb-24">
-              {readNotes.length > 0 ? (
-                readNotes.map((note) => (
+                  className="animate-in slide-in-from-bottom-4 duration-300"
+                  style={{ animationDelay: `${index * 50}ms` }}
+                >
                   <NoteCard
-                    key={note.id}
                     {...note}
                     onClick={() => handleNoteClick(note.id)}
                   />
+                </div>
+              ))}
+            </div>
+          </div>
+        </TabsContent>
+
+        <TabsContent value="read" className="flex-1 mt-0">
+          <div className="h-full overflow-y-auto">
+            <div className="px-6 space-y-4 pb-24">
+              {readNotes.length > 0 ? (
+                readNotes.map((note, index) => (
+                  <div
+                    key={note.id}
+                    className="animate-in slide-in-from-bottom-4 duration-300"
+                    style={{ animationDelay: `${index * 50}ms` }}
+                  >
+                    <NoteCard
+                      {...note}
+                      onClick={() => handleNoteClick(note.id)}
+                    />
+                  </div>
                 ))
               ) : (
-                <div className="text-center py-8">
-                  <p className="text-muted-foreground">No read notes</p>
+                <div className="text-center py-16">
+                  <div className="mb-4">
+                    <FileText className="h-16 w-16 text-muted-foreground/30 mx-auto" />
+                  </div>
+                  <h3 className="text-lg font-semibold text-foreground mb-2">No read notes yet</h3>
+                  <p className="text-muted-foreground">Start reading to see notes here</p>
                 </div>
               )}
             </div>
-          </ScrollArea>
+          </div>
         </TabsContent>
       </Tabs>
     </div>
