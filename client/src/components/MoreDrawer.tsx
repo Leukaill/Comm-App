@@ -9,7 +9,8 @@ import {
   Bot, 
   ClipboardList, 
   History, 
-  Users2 
+  Users2,
+  Users
 } from "lucide-react";
 import { Link } from "wouter";
 
@@ -21,6 +22,18 @@ interface MoreDrawerProps {
 
 export default function MoreDrawer({ children, isOpen, onOpenChange }: MoreDrawerProps) {
   const menuItems = [
+    {
+      category: "Networking & Connections",
+      items: [
+        { 
+          id: "network", 
+          path: "/network", 
+          icon: Users, 
+          label: "Connect", 
+          description: "Browse and connect with business professionals"
+        }
+      ]
+    },
     {
       category: "Documents & Notes",
       items: [
@@ -36,13 +49,6 @@ export default function MoreDrawer({ children, isOpen, onOpenChange }: MoreDrawe
     {
       category: "Surveys & Feedback",
       items: [
-        { 
-          id: "surveys", 
-          path: "/surveys", 
-          icon: ClipboardList, 
-          label: "Surveys", 
-          description: "Complete available surveys and questionnaires"
-        },
         { 
           id: "survey-history", 
           path: "/survey-history", 

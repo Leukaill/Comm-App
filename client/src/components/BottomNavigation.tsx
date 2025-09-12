@@ -1,4 +1,4 @@
-import { Home, Calendar, Users, User, Menu } from "lucide-react";
+import { Home, Calendar, ClipboardList, User, Menu } from "lucide-react";
 import { Link, useLocation } from "wouter";
 import { cn } from "@/lib/utils";
 import { useState } from "react";
@@ -10,7 +10,7 @@ export default function BottomNavigation() {
   
   const allTabs = [
     { id: "events", path: "/events", icon: Calendar, label: "Events" },
-    { id: "network", path: "/network", icon: Users, label: "Network" },
+    { id: "surveys", path: "/surveys", icon: ClipboardList, label: "Survey" },
     { id: "home", path: "/", icon: Home, label: "Home", isCenter: true },
     { id: "profile", path: "/profile", icon: User, label: "Profile" },
     { id: "more", path: "", icon: Menu, label: "More", isDrawer: true },

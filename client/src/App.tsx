@@ -13,6 +13,7 @@ import Home from "@/pages/Home";
 import Events from "@/pages/Events";
 import Notes from "@/pages/Notes";
 import Network from "@/pages/Network";
+import Survey from "@/pages/Survey";
 import Profile from "@/pages/Profile";
 import NotFound from "@/pages/not-found";
 
@@ -51,6 +52,7 @@ function AuthenticatedApp() {
           <Route path="/events" component={Events} />
           <Route path="/notes" component={Notes} />
           <Route path="/network" component={Network} />
+          <Route path="/surveys" component={Survey} />
           <Route path="/profile" component={Profile} />
           <Route component={NotFound} />
         </Switch>
