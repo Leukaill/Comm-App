@@ -75,6 +75,20 @@ export default function AnnouncementCarousel() {
   const [currentSlide, setCurrentSlide] = useState(0);
   const [isAutoPlaying, setIsAutoPlaying] = useState(true);
 
+  // Keyboard navigation
+  const handleKeyDown = (e: React.KeyboardEvent) => {
+    if (e.key === "ArrowLeft") {
+      e.preventDefault();
+      prevSlide();
+    } else if (e.key === "ArrowRight") {
+      e.preventDefault();
+      nextSlide();
+    } else if (e.key === " " || e.key === "Spacebar") {
+      e.preventDefault();
+      setIsAutoPlaying(!isAutoPlaying);
+    }
+  };
+
   // Auto-play functionality
   useEffect(() => {
     if (!isAutoPlaying) return;
@@ -109,7 +123,17 @@ export default function AnnouncementCarousel() {
   const Icon = config.icon;
 
   return (
-    <div className="relative w-full">
+    <div 
+      className="relative w-full" 
+      role="region" 
+      aria-label="Announcements carousel"
+      onKeyDown={handleKeyDown}
+      tabIndex={0}
+    >
+      {/* Screen reader announcements */}
+      <div aria-live="polite" aria-atomic="true" className="sr-only">
+        Showing announcement {currentSlide + 1} of {mockSlides.length}: {currentSlideData.title}
+      </div>
       <Card className="overflow-hidden bg-gradient-to-br from-card/95 to-card/80 backdrop-blur-sm border-border/50 shadow-2xl shadow-primary/10">
         <CardContent className="p-0 relative">
           {/* Main slide container */}
@@ -174,6 +198,7 @@ export default function AnnouncementCarousel() {
               variant="ghost"
               size="icon"
               onClick={prevSlide}
+              aria-label="Previous announcement"
               className="absolute left-4 top-1/2 -translate-y-1/2 z-20 bg-black/30 text-white border-0 backdrop-blur-sm"
               data-testid="button-carousel-prev"
             >
@@ -183,6 +208,7 @@ export default function AnnouncementCarousel() {
               variant="ghost"
               size="icon"
               onClick={nextSlide}
+              aria-label="Next announcement"
               className="absolute right-4 top-1/2 -translate-y-1/2 z-20 bg-black/30 text-white border-0 backdrop-blur-sm"
               data-testid="button-carousel-next"
             >
@@ -191,13 +217,16 @@ export default function AnnouncementCarousel() {
           </div>
 
           {/* Slide indicators */}
-          <div className="absolute bottom-4 left-1/2 -translate-x-1/2 z-20 flex gap-2">
+          <div className="absolute bottom-4 left-1/2 -translate-x-1/2 z-20 flex gap-2" role="tablist" aria-label="Choose announcement">
             {mockSlides.map((_, index) => (
               <button
                 key={index}
                 onClick={() => goToSlide(index)}
+                role="tab"
+                aria-selected={index === currentSlide}
+                aria-label={`Go to announcement ${index + 1} of ${mockSlides.length}`}
                 className={cn(
-                  "w-2 h-2 rounded-full transition-all duration-300",
+                  "w-2 h-2 rounded-full transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-white/50",
                   index === currentSlide 
                     ? "bg-white w-6" 
                     : "bg-white/50 hover:bg-white/70"

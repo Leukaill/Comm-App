@@ -112,8 +112,17 @@ export default function QuickActionsGrid() {
             <Card 
               key={action.id}
               data-testid={`card-action-${action.id}`}
-              className="hover-elevate active-elevate-2 cursor-pointer transition-all duration-300"
+              className="hover-elevate active-elevate-2 cursor-pointer transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-primary/50"
               onClick={action.action}
+              onKeyDown={(e) => {
+                if (e.key === 'Enter' || e.key === ' ') {
+                  e.preventDefault();
+                  action.action();
+                }
+              }}
+              tabIndex={0}
+              role="button"
+              aria-label={`${action.title}: ${action.subtitle}`}
             >
               <CardContent className="p-4">
                 <div className={cn(
