@@ -3,7 +3,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useState } from "react";
-import bpnLogoUrl from "@assets/image_1757668650957.png";
+import bpnLogoUrl from "@assets/logo_1757669896337.png";
 
 interface LoginCardProps {
   onLogin: (email: string, password: string) => void;
@@ -50,11 +50,13 @@ export default function LoginCard({ onLogin, isLoading = false }: LoginCardProps
           <div className="flex justify-center">
             <div className="relative">
               <div className="absolute inset-0 bg-gradient-to-r from-primary/20 to-primary/10 rounded-2xl blur-xl opacity-40"></div>
-              <img 
-                src={bpnLogoUrl} 
-                alt="BPN" 
-                className="relative h-20 w-auto max-w-[140px] object-contain transition-all duration-300 hover:scale-105 filter drop-shadow-lg"
-              />
+              <div className="relative bg-white dark:bg-gray-800 rounded-xl p-3 shadow-lg dark:shadow-gray-900/50">
+                <img 
+                  src={bpnLogoUrl} 
+                  alt="BPN" 
+                  className="h-16 w-auto max-w-[120px] object-contain transition-all duration-300 hover:scale-105"
+                />
+              </div>
             </div>
           </div>
           <div className="space-y-2">
