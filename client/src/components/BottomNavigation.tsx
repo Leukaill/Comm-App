@@ -1,16 +1,19 @@
-import { Home, Calendar, FileText, Users, User } from "lucide-react";
+import { Home, Calendar, Users, User, Menu } from "lucide-react";
 import { Link, useLocation } from "wouter";
 import { cn } from "@/lib/utils";
+import { useState } from "react";
+import MoreDrawer from "./MoreDrawer";
 
 export default function BottomNavigation() {
   const [location] = useLocation();
+  const [isMoreDrawerOpen, setIsMoreDrawerOpen] = useState(false);
   
   const tabs = [
     { id: "home", path: "/", icon: Home, label: "Home" },
     { id: "events", path: "/events", icon: Calendar, label: "Events" },
-    { id: "notes", path: "/notes", icon: FileText, label: "Notes" },
     { id: "network", path: "/network", icon: Users, label: "Network" },
     { id: "profile", path: "/profile", icon: User, label: "Profile" },
+    { id: "more", path: null, icon: Menu, label: "More", isDrawer: true },
   ];
 
   return (
