@@ -92,7 +92,7 @@ export default function LoginCard({ onLogin, isLoading = false }: LoginCardProps
                 <img 
                   src={bpnLogoUrl} 
                   alt="BPN" 
-                  className="relative h-20 w-auto max-w-[140px] object-contain transition-all duration-300 hover:scale-105 filter drop-shadow-md"
+                  className="relative h-20 w-auto max-w-[140px] object-contain transition-all duration-300 hover:scale-105 filter drop-shadow-md dark:invert"
                 />
               </div>
             </div>
