@@ -53,7 +53,7 @@ function AuthenticatedApp() {
             <img 
               src={bpnLogoUrl} 
               alt="BPN" 
-              className="relative h-10 w-auto max-w-[100px] object-contain transition-all duration-300 hover:scale-105 filter drop-shadow-md dark:brightness-150 dark:contrast-150"
+              className="relative h-10 w-auto max-w-[100px] object-contain transition-all duration-300 hover:scale-105 filter drop-shadow-md dark:invert dark:hue-rotate-180"
             />
           </div>
         </div>
