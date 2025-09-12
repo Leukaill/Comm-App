@@ -5,6 +5,7 @@ import { Toaster } from "@/components/ui/toaster";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { ThemeProvider } from "@/components/ThemeProvider";
 import { useState } from "react";
+import bpnLogoUrl from "@assets/logo_1757669896337.png";
 
 // Pages
 import Login from "@/pages/Login";
@@ -50,7 +51,7 @@ function AuthenticatedApp() {
           <div className="relative">
             <div className="absolute inset-0 bg-gradient-to-r from-primary/15 to-primary/5 rounded-xl blur-lg opacity-60"></div>
             <img 
-              src="/assets/logo_1757669896337.png" 
+              src={bpnLogoUrl} 
               alt="BPN" 
               className="relative h-10 w-auto max-w-[100px] object-contain transition-all duration-300 hover:scale-105 filter drop-shadow-md dark:brightness-150 dark:contrast-150"
             />
