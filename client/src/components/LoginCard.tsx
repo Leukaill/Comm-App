@@ -4,8 +4,9 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Checkbox } from "@/components/ui/checkbox";
 import { useState } from "react";
-import { ChevronLeft, Eye, EyeOff, Mail, Lock, User, ArrowRight } from "lucide-react";
+import { ChevronLeft, Eye, EyeOff, Mail, Lock, User, ArrowRight, Facebook, Twitter, Chrome, Apple } from "lucide-react";
 import { cn } from "@/lib/utils";
+import GeometryBackground from "./GeometryBackground";
 import bpnLogoUrl from "@assets/logo_1757669896337.png";
 
 interface LoginCardProps {
@@ -64,65 +65,46 @@ export default function LoginCard({ onLogin, isLoading = false }: LoginCardProps
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center p-4 relative overflow-hidden">
-      {/* Stunning Flowing Background - Better than reference image */}
-      <div className="absolute inset-0 bg-gradient-to-br from-blue-600 via-purple-600 to-blue-800">
-        {/* Animated flowing shapes */}
-        <div className="absolute inset-0 overflow-hidden">
-          {/* Large flowing shapes */}
-          <div className="absolute -top-1/2 -left-1/4 w-full h-full bg-gradient-to-br from-white/10 to-transparent rounded-full blur-3xl transform rotate-12 animate-pulse"></div>
-          <div className="absolute -bottom-1/2 -right-1/4 w-full h-full bg-gradient-to-tl from-white/5 to-transparent rounded-full blur-3xl transform -rotate-12 animate-pulse delay-1000"></div>
-          
-          {/* Floating spheres */}
-          <div className="absolute top-20 left-20 w-32 h-32 bg-white/20 rounded-full blur-2xl animate-bounce"></div>
-          <div className="absolute top-1/3 right-16 w-24 h-24 bg-white/15 rounded-full blur-xl animate-pulse delay-500"></div>
-          <div className="absolute bottom-1/3 left-1/4 w-20 h-20 bg-white/10 rounded-full blur-xl animate-bounce delay-700"></div>
-          <div className="absolute bottom-20 right-1/3 w-16 h-16 bg-white/25 rounded-full blur-lg animate-pulse delay-300"></div>
-          
-          {/* Flowing abstract shapes */}
-          <div className="absolute top-0 left-0 w-full h-full opacity-30">
-            <svg viewBox="0 0 1000 1000" className="w-full h-full">
-              <defs>
-                <linearGradient id="grad1" x1="0%" y1="0%" x2="100%" y2="100%">
-                  <stop offset="0%" stopColor="rgba(255,255,255,0.2)" />
-                  <stop offset="100%" stopColor="rgba(255,255,255,0.05)" />
-                </linearGradient>
-              </defs>
-              <path d="M200,300 Q400,100 600,300 T1000,300 L1000,1000 L0,1000 Z" fill="url(#grad1)" className="animate-pulse" />
-            </svg>
-          </div>
-        </div>
-      </div>
+    <div className="min-h-screen flex items-center justify-center p-4 relative overflow-hidden bg-[hsl(var(--geometric-neutral-50))] dark:bg-[hsl(var(--geometric-neutral-50))]">
+      {/* Premium Geometric Background - No Gradients */}
+      <GeometryBackground className="opacity-60 dark:opacity-40" />
 
       {/* Content */}
-      <div className="relative z-10 w-full max-w-md">
+      <div className="relative z-20 w-full max-w-md">
         {screen === 'welcome' && (
-          <div className="text-center space-y-8 animate-in fade-in duration-700">
+          <div className="text-center space-y-8 geometric-slide-in">
             {/* Logo */}
-            <div className="flex justify-center mb-8">
+            <div className="flex justify-center mb-12">
               <div className="relative">
-                <div className="absolute inset-0 bg-white/20 rounded-3xl blur-2xl"></div>
+                <div className="absolute inset-0 w-20 h-20 bg-[hsl(var(--geometric-primary))] rounded-2xl blur-xl opacity-20"></div>
                 <img 
                   src={bpnLogoUrl} 
                   alt="BPN" 
-                  className="relative h-24 w-auto max-w-[160px] object-contain filter brightness-0 invert"
+                  className="relative h-20 w-auto max-w-[140px] object-contain dark:invert transition-all duration-300 hover:scale-105"
                 />
               </div>
             </div>
 
             {/* Welcome Text */}
-            <div className="space-y-4">
-              <h1 className="text-4xl font-bold text-white mb-2">Welcome Back!</h1>
-              <p className="text-white/80 text-lg leading-relaxed px-4">
-                Connect with business professionals and grow your network
+            <div className="space-y-6">
+              <h1 className="text-5xl font-bold text-[hsl(var(--geometric-neutral-800))] dark:text-[hsl(var(--geometric-neutral-900))] leading-tight">
+                Welcome to BPN
+              </h1>
+              <p className="text-[hsl(var(--geometric-neutral-600))] dark:text-[hsl(var(--geometric-neutral-700))] text-lg leading-relaxed px-4">
+                Professional networking reimagined
               </p>
             </div>
 
             {/* Action Buttons */}
-            <div className="space-y-4 pt-8">
+            <div className="space-y-4 pt-12">
               <Button 
                 onClick={() => { resetForm(); setScreen('signin'); }}
-                className="w-full h-14 text-lg font-semibold bg-white text-blue-600 hover:bg-white/90 shadow-2xl hover:shadow-white/25 transition-all duration-300 hover:scale-105"
+                className="w-full h-16 text-lg font-semibold bg-[hsl(var(--geometric-primary))] hover:bg-[hsl(var(--geometric-primary-dark))] text-white border-0"
+                style={{
+                  boxShadow: 'var(--shadow-geometric-lg)',
+                  borderRadius: 'var(--radius-xl)',
+                  transition: 'all var(--motion-duration-normal) var(--motion-ease-out)'
+                }}
                 data-testid="button-signin-nav"
               >
                 Sign In
@@ -130,27 +112,32 @@ export default function LoginCard({ onLogin, isLoading = false }: LoginCardProps
               <Button 
                 onClick={() => { resetForm(); setScreen('signup'); }}
                 variant="outline"
-                className="w-full h-14 text-lg font-semibold border-2 border-white/30 text-white hover:bg-white/10 backdrop-blur-sm transition-all duration-300 hover:scale-105"
+                className="w-full h-16 text-lg font-semibold border-2 border-[hsl(var(--geometric-neutral-300))] text-[hsl(var(--geometric-neutral-700))] hover:bg-[hsl(var(--geometric-neutral-100))] dark:border-[hsl(var(--geometric-neutral-700))] dark:text-[hsl(var(--geometric-neutral-300))] dark:hover:bg-[hsl(var(--geometric-neutral-200))]"
+                style={{
+                  borderRadius: 'var(--radius-xl)',
+                  transition: 'all var(--motion-duration-normal) var(--motion-ease-out)'
+                }}
                 data-testid="button-signup-nav"
               >
-                Sign Up
+                Create Account
               </Button>
             </div>
 
             {/* Quick Demo Access */}
-            <div className="pt-8 space-y-4">
-              <p className="text-white/60 text-sm">Quick Demo Access</p>
-              <div className="grid grid-cols-2 gap-3">
+            <div className="pt-12 space-y-6">
+              <p className="text-[hsl(var(--geometric-neutral-500))] text-sm">Quick Demo Access</p>
+              <div className="grid grid-cols-2 gap-4">
                 <Button
                   variant="outline"
                   size="sm"
                   onClick={() => handleQuickLogin("beneficiary")}
                   data-testid="button-demo-beneficiary"
-                  className="h-12 border border-white/20 text-white/80 hover:bg-white/10 backdrop-blur-sm transition-all duration-300 hover:scale-105"
+                  className="h-14 border border-[hsl(var(--geometric-neutral-200))] text-[hsl(var(--geometric-neutral-600))] hover:bg-[hsl(var(--geometric-neutral-100))] dark:border-[hsl(var(--geometric-neutral-700))] dark:text-[hsl(var(--geometric-neutral-400))] dark:hover:bg-[hsl(var(--geometric-neutral-100))]"
+                  style={{ borderRadius: 'var(--radius-lg)' }}
                 >
-                  <div className="flex flex-col items-center">
+                  <div className="flex flex-col items-center gap-1">
                     <span className="text-sm font-semibold">Demo</span>
-                    <span className="text-xs text-white/60">Beneficiary</span>
+                    <span className="text-xs opacity-75">Beneficiary</span>
                   </div>
                 </Button>
                 <Button
@@ -158,11 +145,12 @@ export default function LoginCard({ onLogin, isLoading = false }: LoginCardProps
                   size="sm"
                   onClick={() => handleQuickLogin("manager")}
                   data-testid="button-demo-manager"
-                  className="h-12 border border-white/20 text-white/80 hover:bg-white/10 backdrop-blur-sm transition-all duration-300 hover:scale-105"
+                  className="h-14 border border-[hsl(var(--geometric-neutral-200))] text-[hsl(var(--geometric-neutral-600))] hover:bg-[hsl(var(--geometric-neutral-100))] dark:border-[hsl(var(--geometric-neutral-700))] dark:text-[hsl(var(--geometric-neutral-400))] dark:hover:bg-[hsl(var(--geometric-neutral-100))]"
+                  style={{ borderRadius: 'var(--radius-lg)' }}
                 >
-                  <div className="flex flex-col items-center">
+                  <div className="flex flex-col items-center gap-1">
                     <span className="text-sm font-semibold">Demo</span>
-                    <span className="text-xs text-white/60">Manager</span>
+                    <span className="text-xs opacity-75">Manager</span>
                   </div>
                 </Button>
               </div>
@@ -171,25 +159,37 @@ export default function LoginCard({ onLogin, isLoading = false }: LoginCardProps
         )}
 
         {(screen === 'signin' || screen === 'signup') && (
-          <Card className="backdrop-blur-xl bg-white/95 dark:bg-black/80 border-white/20 shadow-2xl animate-in slide-in-from-right duration-500">
-            <CardHeader className="space-y-4 pb-6">
+          <Card 
+            className="bg-white dark:bg-[hsl(var(--geometric-neutral-100))] border border-[hsl(var(--geometric-neutral-200))] dark:border-[hsl(var(--geometric-neutral-700))] geometric-slide-in"
+            style={{
+              boxShadow: 'var(--shadow-geometric-xl)',
+              borderRadius: 'var(--radius-2xl)'
+            }}
+          >
+            <CardHeader style={{ padding: 'var(--space-24)' }} className="space-y-6 pb-6">
               {/* Back Button */}
               <Button
                 variant="ghost"
                 size="sm"
                 onClick={() => setScreen('welcome')}
-                className="self-start p-2 rounded-full hover:bg-black/5 dark:hover:bg-white/5 transition-colors"
+                className="self-start p-2 rounded-full hover:bg-[hsl(var(--geometric-neutral-100))] dark:hover:bg-[hsl(var(--geometric-neutral-200))] transition-colors"
                 data-testid="button-back"
               >
                 <ChevronLeft size={20} />
               </Button>
 
               {/* Title */}
-              <div className="text-center space-y-2">
-                <CardTitle className="text-2xl font-bold text-gray-900 dark:text-white">
+              <div className="text-center space-y-3">
+                <CardTitle 
+                  className="font-bold text-[hsl(var(--geometric-neutral-800))] dark:text-[hsl(var(--geometric-neutral-900))]"
+                  style={{ fontSize: 'var(--font-size-3xl)' }}
+                >
                   {screen === 'signin' ? 'Welcome back' : 'Get Started'}
                 </CardTitle>
-                <p className="text-gray-600 dark:text-gray-400 text-sm">
+                <p 
+                  className="text-[hsl(var(--geometric-neutral-500))] dark:text-[hsl(var(--geometric-neutral-600))]"
+                  style={{ fontSize: 'var(--font-size-sm)' }}
+                >
                   {screen === 'signin' 
                     ? 'Sign in to your account' 
                     : 'Create your BPN account'
@@ -198,15 +198,19 @@ export default function LoginCard({ onLogin, isLoading = false }: LoginCardProps
               </div>
             </CardHeader>
             
-            <CardContent className="space-y-6">
-              <form onSubmit={handleSubmit} className="space-y-5">
+            <CardContent style={{ padding: '0 var(--space-24) var(--space-24)' }} className="space-y-6">
+              <form onSubmit={handleSubmit} className="space-y-6">
                 {screen === 'signup' && (
                   <div className="space-y-2">
-                    <Label htmlFor="fullName" className="text-sm font-medium text-gray-700 dark:text-gray-300">
+                    <Label 
+                      htmlFor="fullName" 
+                      className="font-medium text-[hsl(var(--geometric-neutral-700))] dark:text-[hsl(var(--geometric-neutral-800))]"
+                      style={{ fontSize: 'var(--font-size-sm)' }}
+                    >
                       Full Name
                     </Label>
                     <div className="relative">
-                      <User className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" size={18} />
+                      <User className="absolute left-3 top-1/2 transform -translate-y-1/2 text-[hsl(var(--geometric-neutral-400))]" size={18} />
                       <Input
                         id="fullName"
                         type="text"
@@ -215,18 +219,23 @@ export default function LoginCard({ onLogin, isLoading = false }: LoginCardProps
                         placeholder="Enter your full name"
                         data-testid="input-fullname"
                         required
-                        className="h-12 pl-10 pr-4 border border-gray-200 dark:border-gray-700 focus:border-blue-500 dark:focus:border-blue-400 transition-colors"
+                        className="h-12 pl-10 pr-4 border border-[hsl(var(--geometric-neutral-300))] focus:border-[hsl(var(--geometric-primary))] dark:border-[hsl(var(--geometric-neutral-700))] dark:focus:border-[hsl(var(--geometric-primary))] transition-colors"
+                        style={{ borderRadius: 'var(--radius-lg)' }}
                       />
                     </div>
                   </div>
                 )}
                 
                 <div className="space-y-2">
-                  <Label htmlFor="email" className="text-sm font-medium text-gray-700 dark:text-gray-300">
+                  <Label 
+                    htmlFor="email" 
+                    className="font-medium text-[hsl(var(--geometric-neutral-700))] dark:text-[hsl(var(--geometric-neutral-800))]"
+                    style={{ fontSize: 'var(--font-size-sm)' }}
+                  >
                     Email
                   </Label>
                   <div className="relative">
-                    <Mail className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" size={18} />
+                    <Mail className="absolute left-3 top-1/2 transform -translate-y-1/2 text-[hsl(var(--geometric-neutral-400))]" size={18} />
                     <Input
                       id="email"
                       type="email"
@@ -235,17 +244,22 @@ export default function LoginCard({ onLogin, isLoading = false }: LoginCardProps
                       placeholder="Enter your email"
                       data-testid="input-email"
                       required
-                      className="h-12 pl-10 pr-4 border border-gray-200 dark:border-gray-700 focus:border-blue-500 dark:focus:border-blue-400 transition-colors"
+                      className="h-12 pl-10 pr-4 border border-[hsl(var(--geometric-neutral-300))] focus:border-[hsl(var(--geometric-primary))] dark:border-[hsl(var(--geometric-neutral-700))] dark:focus:border-[hsl(var(--geometric-primary))] transition-colors"
+                      style={{ borderRadius: 'var(--radius-lg)' }}
                     />
                   </div>
                 </div>
                 
                 <div className="space-y-2">
-                  <Label htmlFor="password" className="text-sm font-medium text-gray-700 dark:text-gray-300">
+                  <Label 
+                    htmlFor="password" 
+                    className="font-medium text-[hsl(var(--geometric-neutral-700))] dark:text-[hsl(var(--geometric-neutral-800))]"
+                    style={{ fontSize: 'var(--font-size-sm)' }}
+                  >
                     Password
                   </Label>
                   <div className="relative">
-                    <Lock className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" size={18} />
+                    <Lock className="absolute left-3 top-1/2 transform -translate-y-1/2 text-[hsl(var(--geometric-neutral-400))]" size={18} />
                     <Input
                       id="password"
                       type={showPassword ? "text" : "password"}
@@ -254,14 +268,15 @@ export default function LoginCard({ onLogin, isLoading = false }: LoginCardProps
                       placeholder="Enter your password"
                       data-testid="input-password"
                       required
-                      className="h-12 pl-10 pr-12 border border-gray-200 dark:border-gray-700 focus:border-blue-500 dark:focus:border-blue-400 transition-colors"
+                      className="h-12 pl-10 pr-12 border border-[hsl(var(--geometric-neutral-300))] focus:border-[hsl(var(--geometric-primary))] dark:border-[hsl(var(--geometric-neutral-700))] dark:focus:border-[hsl(var(--geometric-primary))] transition-colors"
+                      style={{ borderRadius: 'var(--radius-lg)' }}
                     />
                     <Button
                       type="button"
                       variant="ghost"
                       size="sm"
                       onClick={() => setShowPassword(!showPassword)}
-                      className="absolute right-2 top-1/2 transform -translate-y-1/2 p-2 hover:bg-gray-100 dark:hover:bg-gray-800"
+                      className="absolute right-2 top-1/2 transform -translate-y-1/2 p-2 hover:bg-[hsl(var(--geometric-neutral-100))] dark:hover:bg-[hsl(var(--geometric-neutral-200))]"
                       data-testid="button-toggle-password"
                     >
                       {showPassword ? <EyeOff size={16} /> : <Eye size={16} />}
@@ -271,11 +286,15 @@ export default function LoginCard({ onLogin, isLoading = false }: LoginCardProps
 
                 {screen === 'signup' && (
                   <div className="space-y-2">
-                    <Label htmlFor="confirmPassword" className="text-sm font-medium text-gray-700 dark:text-gray-300">
+                    <Label 
+                      htmlFor="confirmPassword" 
+                      className="font-medium text-[hsl(var(--geometric-neutral-700))] dark:text-[hsl(var(--geometric-neutral-800))]"
+                      style={{ fontSize: 'var(--font-size-sm)' }}
+                    >
                       Confirm Password
                     </Label>
                     <div className="relative">
-                      <Lock className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" size={18} />
+                      <Lock className="absolute left-3 top-1/2 transform -translate-y-1/2 text-[hsl(var(--geometric-neutral-400))]" size={18} />
                       <Input
                         id="confirmPassword"
                         type="password"
@@ -284,7 +303,8 @@ export default function LoginCard({ onLogin, isLoading = false }: LoginCardProps
                         placeholder="Confirm your password"
                         data-testid="input-confirm-password"
                         required
-                        className="h-12 pl-10 pr-4 border border-gray-200 dark:border-gray-700 focus:border-blue-500 dark:focus:border-blue-400 transition-colors"
+                        className="h-12 pl-10 pr-4 border border-[hsl(var(--geometric-neutral-300))] focus:border-[hsl(var(--geometric-primary))] dark:border-[hsl(var(--geometric-neutral-700))] dark:focus:border-[hsl(var(--geometric-primary))] transition-colors"
+                        style={{ borderRadius: 'var(--radius-lg)' }}
                       />
                     </div>
                   </div>
@@ -299,14 +319,19 @@ export default function LoginCard({ onLogin, isLoading = false }: LoginCardProps
                         onCheckedChange={(checked) => setRememberMe(checked as boolean)}
                         data-testid="checkbox-remember"
                       />
-                      <Label htmlFor="remember" className="text-sm text-gray-600 dark:text-gray-400">
+                      <Label 
+                        htmlFor="remember" 
+                        className="text-[hsl(var(--geometric-neutral-600))] dark:text-[hsl(var(--geometric-neutral-700))]"
+                        style={{ fontSize: 'var(--font-size-sm)' }}
+                      >
                         Remember me
                       </Label>
                     </div>
                     <Button
                       variant="ghost"
                       size="sm"
-                      className="text-sm text-blue-600 hover:text-blue-700 dark:text-blue-400 p-0 h-auto"
+                      className="text-[hsl(var(--geometric-primary))] hover:text-[hsl(var(--geometric-primary-dark))] p-0 h-auto"
+                      style={{ fontSize: 'var(--font-size-sm)' }}
                       data-testid="button-forgot-password"
                     >
                       Forgot password?
@@ -315,7 +340,7 @@ export default function LoginCard({ onLogin, isLoading = false }: LoginCardProps
                 )}
 
                 {screen === 'signup' && (
-                  <div className="flex items-start space-x-2">
+                  <div className="flex items-start space-x-3">
                     <Checkbox 
                       id="terms" 
                       checked={agreeToTerms}
@@ -323,9 +348,13 @@ export default function LoginCard({ onLogin, isLoading = false }: LoginCardProps
                       data-testid="checkbox-terms"
                       className="mt-1"
                     />
-                    <Label htmlFor="terms" className="text-sm text-gray-600 dark:text-gray-400 leading-relaxed">
+                    <Label 
+                      htmlFor="terms" 
+                      className="text-[hsl(var(--geometric-neutral-600))] dark:text-[hsl(var(--geometric-neutral-700))] leading-relaxed"
+                      style={{ fontSize: 'var(--font-size-sm)' }}
+                    >
                       I agree to the processing of{" "}
-                      <Button variant="ghost" className="p-0 h-auto text-blue-600 hover:text-blue-700 dark:text-blue-400 underline">
+                      <Button variant="ghost" className="p-0 h-auto text-[hsl(var(--geometric-primary))] hover:text-[hsl(var(--geometric-primary-dark))] underline">
                         Personal data
                       </Button>
                     </Label>
@@ -335,11 +364,17 @@ export default function LoginCard({ onLogin, isLoading = false }: LoginCardProps
                 <Button 
                   type="submit" 
                   className={cn(
-                    "w-full h-12 text-base font-semibold bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-[1.02] disabled:hover:scale-100",
+                    "w-full h-14 font-semibold bg-[hsl(var(--geometric-primary))] hover:bg-[hsl(var(--geometric-primary-dark))] text-white border-0",
                     (screen === 'signin' && (!email || !password)) || 
                     (screen === 'signup' && (!email || !password || !fullName || !agreeToTerms || password !== confirmPassword)) ? 
                     "opacity-50 cursor-not-allowed" : ""
                   )}
+                  style={{
+                    fontSize: 'var(--font-size-lg)',
+                    borderRadius: 'var(--radius-xl)',
+                    boxShadow: 'var(--shadow-geometric-md)',
+                    transition: 'all var(--motion-duration-normal) var(--motion-ease-out)'
+                  }}
                   disabled={
                     isLoading || 
                     (screen === 'signin' && (!email || !password)) ||
@@ -362,13 +397,19 @@ export default function LoginCard({ onLogin, isLoading = false }: LoginCardProps
               </form>
               
               {/* Social Login */}
-              <div className="space-y-4">
+              <div className="space-y-6">
                 <div className="relative">
                   <div className="absolute inset-0 flex items-center">
-                    <div className="w-full border-t border-gray-200 dark:border-gray-700"></div>
+                    <div className="w-full border-t border-[hsl(var(--geometric-neutral-200))] dark:border-[hsl(var(--geometric-neutral-700))]"></div>
                   </div>
-                  <div className="relative flex justify-center text-sm">
-                    <span className="bg-white dark:bg-black px-4 text-gray-500 dark:text-gray-400">
+                  <div className="relative flex justify-center">
+                    <span 
+                      className="bg-white dark:bg-[hsl(var(--geometric-neutral-100))] px-4 text-[hsl(var(--geometric-neutral-500))]"
+                      style={{ 
+                        fontSize: 'var(--font-size-sm)',
+                        padding: '0 var(--space-4)'
+                      }}
+                    >
                       {screen === 'signin' ? 'Sign in with' : 'Sign up with'}
                     </span>
                   </div>
@@ -376,30 +417,37 @@ export default function LoginCard({ onLogin, isLoading = false }: LoginCardProps
                 
                 <div className="grid grid-cols-4 gap-3">
                   {[
-                    { name: 'Facebook', icon: '📘', color: 'hover:bg-blue-50 dark:hover:bg-blue-900/20' },
-                    { name: 'Twitter', icon: '🐦', color: 'hover:bg-sky-50 dark:hover:bg-sky-900/20' },
-                    { name: 'Google', icon: '🔍', color: 'hover:bg-red-50 dark:hover:bg-red-900/20' },
-                    { name: 'Apple', icon: '🍎', color: 'hover:bg-gray-50 dark:hover:bg-gray-900/20' }
+                    { name: 'Facebook', icon: Facebook, color: 'hover:bg-[hsl(var(--geometric-accent))] dark:hover:bg-[hsl(var(--geometric-accent))]' },
+                    { name: 'Twitter', icon: Twitter, color: 'hover:bg-[hsl(var(--geometric-accent))] dark:hover:bg-[hsl(var(--geometric-accent))]' },
+                    { name: 'Google', icon: Chrome, color: 'hover:bg-[hsl(var(--geometric-accent))] dark:hover:bg-[hsl(var(--geometric-accent))]' },
+                    { name: 'Apple', icon: Apple, color: 'hover:bg-[hsl(var(--geometric-accent))] dark:hover:bg-[hsl(var(--geometric-accent))]' }
                   ].map((provider) => (
                     <Button
                       key={provider.name}
                       variant="outline"
                       size="sm"
                       className={cn(
-                        "h-12 border border-gray-200 dark:border-gray-700 transition-all duration-300 hover:scale-105",
+                        "h-14 border border-[hsl(var(--geometric-neutral-200))] dark:border-[hsl(var(--geometric-neutral-700))] text-[hsl(var(--geometric-neutral-600))] dark:text-[hsl(var(--geometric-neutral-400))]",
                         provider.color
                       )}
+                      style={{
+                        borderRadius: 'var(--radius-lg)',
+                        transition: 'all var(--motion-duration-normal) var(--motion-ease-out)'
+                      }}
                       data-testid={`button-${provider.name.toLowerCase()}`}
                     >
-                      <span className="text-lg">{provider.icon}</span>
+                      <provider.icon size={20} />
                     </Button>
                   ))}
                 </div>
               </div>
               
               {/* Switch between signin/signup */}
-              <div className="text-center pt-4">
-                <p className="text-sm text-gray-600 dark:text-gray-400">
+              <div className="text-center pt-6">
+                <p 
+                  className="text-[hsl(var(--geometric-neutral-600))] dark:text-[hsl(var(--geometric-neutral-700))]"
+                  style={{ fontSize: 'var(--font-size-sm)' }}
+                >
                   {screen === 'signin' ? "Don't have an account? " : "Already have an account? "}
                   <Button 
                     variant="ghost" 
@@ -407,7 +455,8 @@ export default function LoginCard({ onLogin, isLoading = false }: LoginCardProps
                       resetForm();
                       setScreen(screen === 'signin' ? 'signup' : 'signin');
                     }}
-                    className="p-0 h-auto text-sm text-blue-600 hover:text-blue-700 dark:text-blue-400 underline"
+                    className="p-0 h-auto text-[hsl(var(--geometric-primary))] hover:text-[hsl(var(--geometric-primary-dark))] underline"
+                    style={{ fontSize: 'var(--font-size-sm)' }}
                     data-testid={screen === 'signin' ? "button-goto-signup" : "button-goto-signin"}
                   >
                     {screen === 'signin' ? 'Sign up' : 'Sign in'}
