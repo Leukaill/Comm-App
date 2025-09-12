@@ -82,7 +82,7 @@ export default function Notes() {
   };
 
   return (
-    <div className="flex-1 flex flex-col h-full bg-gradient-to-br from-background via-background to-primary/5">
+    <div className="flex-1 flex flex-col min-h-0 bg-gradient-to-br from-background via-background to-primary/5">
       {/* Enhanced Header with gradient background */}
       <header className="relative overflow-hidden bg-gradient-to-r from-primary/10 via-background to-primary/10 border-b border-border/50 px-6 py-6">
         {/* Animated background elements */}
@@ -121,7 +121,7 @@ export default function Notes() {
         </div>
       </header>
 
-      <Tabs defaultValue="unread" className="flex-1 flex flex-col">
+      <Tabs defaultValue="unread" className="flex-1 flex flex-col min-h-0">
         {/* Enhanced tabs with better styling */}
         <div className="px-6 pt-4 pb-2">
           <TabsList className="grid w-full grid-cols-3 bg-muted/30 backdrop-blur-sm border border-border/30 rounded-xl p-1">
@@ -155,39 +155,54 @@ export default function Notes() {
           </TabsList>
         </div>
 
-        <TabsContent value="unread" className="flex-1 mt-0">
-          <div className="h-full overflow-y-auto">
-            <div className="px-6 space-y-4 pb-24">
-              {unreadNotes.length > 0 ? (
-                unreadNotes.map((note, index) => (
-                  <div
-                    key={note.id}
-                    className="animate-in slide-in-from-bottom-4 duration-300"
-                    style={{ animationDelay: `${index * 100}ms` }}
-                  >
-                    <NoteCard
-                      {...note}
-                      onClick={() => handleNoteClick(note.id)}
-                    />
-                  </div>
-                ))
-              ) : (
-                <div className="text-center py-16">
-                  <div className="mb-4">
-                    <Sparkles className="h-16 w-16 text-muted-foreground/30 mx-auto" />
-                  </div>
-                  <h3 className="text-lg font-semibold text-foreground mb-2">All caught up!</h3>
-                  <p className="text-muted-foreground">No unread notes to display</p>
+        <TabsContent value="unread" className="flex-1 mt-0 overflow-y-auto">
+          <div className="px-6 space-y-4 pb-24">
+            {unreadNotes.length > 0 ? (
+              unreadNotes.map((note, index) => (
+                <div
+                  key={note.id}
+                  className="animate-in slide-in-from-bottom-4 duration-300"
+                  style={{ animationDelay: `${index * 100}ms` }}
+                >
+                  <NoteCard
+                    {...note}
+                    onClick={() => handleNoteClick(note.id)}
+                  />
                 </div>
-              )}
-            </div>
+              ))
+            ) : (
+              <div className="text-center py-16">
+                <div className="mb-4">
+                  <Sparkles className="h-16 w-16 text-muted-foreground/30 mx-auto" />
+                </div>
+                <h3 className="text-lg font-semibold text-foreground mb-2">All caught up!</h3>
+                <p className="text-muted-foreground">No unread notes to display</p>
+              </div>
+            )}
           </div>
         </TabsContent>
 
-        <TabsContent value="all" className="flex-1 mt-0">
-          <div className="h-full overflow-y-auto">
-            <div className="px-6 space-y-4 pb-24">
-              {filteredNotes.map((note, index) => (
+        <TabsContent value="all" className="flex-1 mt-0 overflow-y-auto">
+          <div className="px-6 space-y-4 pb-24">
+            {filteredNotes.map((note, index) => (
+              <div
+                key={note.id}
+                className="animate-in slide-in-from-bottom-4 duration-300"
+                style={{ animationDelay: `${index * 50}ms` }}
+              >
+                <NoteCard
+                  {...note}
+                  onClick={() => handleNoteClick(note.id)}
+                />
+              </div>
+            ))}
+          </div>
+        </TabsContent>
+
+        <TabsContent value="read" className="flex-1 mt-0 overflow-y-auto">
+          <div className="px-6 space-y-4 pb-24">
+            {readNotes.length > 0 ? (
+              readNotes.map((note, index) => (
                 <div
                   key={note.id}
                   className="animate-in slide-in-from-bottom-4 duration-300"
@@ -198,37 +213,16 @@ export default function Notes() {
                     onClick={() => handleNoteClick(note.id)}
                   />
                 </div>
-              ))}
-            </div>
-          </div>
-        </TabsContent>
-
-        <TabsContent value="read" className="flex-1 mt-0">
-          <div className="h-full overflow-y-auto">
-            <div className="px-6 space-y-4 pb-24">
-              {readNotes.length > 0 ? (
-                readNotes.map((note, index) => (
-                  <div
-                    key={note.id}
-                    className="animate-in slide-in-from-bottom-4 duration-300"
-                    style={{ animationDelay: `${index * 50}ms` }}
-                  >
-                    <NoteCard
-                      {...note}
-                      onClick={() => handleNoteClick(note.id)}
-                    />
-                  </div>
-                ))
-              ) : (
-                <div className="text-center py-16">
-                  <div className="mb-4">
-                    <FileText className="h-16 w-16 text-muted-foreground/30 mx-auto" />
-                  </div>
-                  <h3 className="text-lg font-semibold text-foreground mb-2">No read notes yet</h3>
-                  <p className="text-muted-foreground">Start reading to see notes here</p>
+              ))
+            ) : (
+              <div className="text-center py-16">
+                <div className="mb-4">
+                  <FileText className="h-16 w-16 text-muted-foreground/30 mx-auto" />
                 </div>
-              )}
-            </div>
+                <h3 className="text-lg font-semibold text-foreground mb-2">No read notes yet</h3>
+                <p className="text-muted-foreground">Start reading to see notes here</p>
+              </div>
+            )}
           </div>
         </TabsContent>
       </Tabs>
