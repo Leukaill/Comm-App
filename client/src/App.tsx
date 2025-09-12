@@ -52,7 +52,7 @@ function AuthenticatedApp() {
             <img 
               src="/assets/logo_1757669896337.png" 
               alt="BPN" 
-              className="relative h-10 w-auto max-w-[100px] object-contain transition-all duration-300 hover:scale-105 filter drop-shadow-md dark:invert"
+              className="relative h-10 w-auto max-w-[100px] object-contain transition-all duration-300 hover:scale-105 filter drop-shadow-md dark:brightness-150 dark:contrast-150"
             />
           </div>
         </div>
