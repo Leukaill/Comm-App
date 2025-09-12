@@ -48,7 +48,7 @@ function AuthenticatedApp() {
       </header>
 
       {/* Main content with smooth page transitions */}
-      <main className="flex-1 overflow-hidden relative">
+      <main className="flex-1 relative overflow-hidden min-h-0">
         <AnimatePresence mode="wait">
           <Switch>
             <Route path="/" component={() => <PageTransition><Home /></PageTransition>} />
