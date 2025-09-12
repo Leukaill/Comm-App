@@ -49,13 +49,11 @@ function AuthenticatedApp() {
         <div className="relative z-10">
           <div className="relative">
             <div className="absolute inset-0 bg-gradient-to-r from-primary/15 to-primary/5 rounded-xl blur-lg opacity-60"></div>
-            <div className="relative bg-white dark:bg-gray-800 rounded-lg p-2 shadow-md dark:shadow-gray-900/50">
-              <img 
-                src="/assets/logo_1757669896337.png" 
-                alt="BPN" 
-                className="h-8 w-auto max-w-[80px] object-contain transition-all duration-300 hover:scale-105"
-              />
-            </div>
+            <img 
+              src="/assets/logo_1757669896337.png" 
+              alt="BPN" 
+              className="relative h-10 w-auto max-w-[100px] object-contain transition-all duration-300 hover:scale-105 filter drop-shadow-md dark:invert"
+            />
           </div>
         </div>
         
