@@ -5,6 +5,7 @@ import { Toaster } from "@/components/ui/toaster";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { ThemeProvider } from "@/components/ThemeProvider";
 import { useState } from "react";
+import { AnimatePresence } from "framer-motion";
 import bpnLogoUrl from "@assets/logo_1757669896337.png";
 
 // Pages
@@ -20,6 +21,7 @@ import NotFound from "@/pages/not-found";
 // Components
 import BottomNavigation from "@/components/BottomNavigation";
 import ThemeToggle from "@/components/ThemeToggle";
+import PageTransition from "@/components/PageTransition";
 
 function AuthenticatedApp() {
   return (
@@ -45,17 +47,19 @@ function AuthenticatedApp() {
         </div>
       </header>
 
-      {/* Main content with proper routing */}
-      <main className="flex-1 overflow-hidden">
-        <Switch>
-          <Route path="/" component={Home} />
-          <Route path="/events" component={Events} />
-          <Route path="/notes" component={Notes} />
-          <Route path="/network" component={Network} />
-          <Route path="/surveys" component={Survey} />
-          <Route path="/profile" component={Profile} />
-          <Route component={NotFound} />
-        </Switch>
+      {/* Main content with smooth page transitions */}
+      <main className="flex-1 overflow-hidden relative">
+        <AnimatePresence mode="wait">
+          <Switch>
+            <Route path="/" component={() => <PageTransition><Home /></PageTransition>} />
+            <Route path="/events" component={() => <PageTransition><Events /></PageTransition>} />
+            <Route path="/notes" component={() => <PageTransition><Notes /></PageTransition>} />
+            <Route path="/network" component={() => <PageTransition><Network /></PageTransition>} />
+            <Route path="/surveys" component={() => <PageTransition><Survey /></PageTransition>} />
+            <Route path="/profile" component={() => <PageTransition><Profile /></PageTransition>} />
+            <Route component={() => <PageTransition><NotFound /></PageTransition>} />
+          </Switch>
+        </AnimatePresence>
       </main>
 
       {/* Bottom navigation */}
