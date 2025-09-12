@@ -52,7 +52,7 @@ function AuthenticatedApp() {
             <img 
               src="/assets/logo_1757666405625.png" 
               alt="BPN" 
-              className="relative h-10 w-10 rounded-lg shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-110"
+              className="relative h-8 w-auto max-w-[80px] rounded-lg shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-110 object-contain"
             />
           </div>
           <div className="space-y-0.5">
