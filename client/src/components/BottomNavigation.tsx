@@ -13,7 +13,7 @@ export default function BottomNavigation() {
     { id: "events", path: "/events", icon: Calendar, label: "Events" },
     { id: "network", path: "/network", icon: Users, label: "Network" },
     { id: "profile", path: "/profile", icon: User, label: "Profile" },
-    { id: "more", path: null, icon: Menu, label: "More", isDrawer: true },
+    { id: "more", path: "", icon: Menu, label: "More", isDrawer: true },
   ];
 
   return (
@@ -27,6 +27,44 @@ export default function BottomNavigation() {
             const Icon = tab.icon;
             const isActive = location === tab.path;
             
+            // Handle drawer tab differently
+            if (tab.isDrawer) {
+              return (
+                <MoreDrawer 
+                  key={tab.id}
+                  isOpen={isMoreDrawerOpen} 
+                  onOpenChange={setIsMoreDrawerOpen}
+                >
+                  <button
+                    data-testid={`tab-${tab.id}`}
+                    className={cn(
+                      "flex flex-col items-center gap-1.5 px-3 py-2 rounded-xl transition-all duration-300 min-h-[64px] flex-1 relative group",
+                      "text-muted-foreground hover:text-foreground hover:scale-105"
+                    )}
+                  >
+                    {/* Icon container with enhanced effects */}
+                    <div className={cn(
+                      "relative flex items-center justify-center w-8 h-8 rounded-lg transition-all duration-300",
+                      "group-hover:bg-muted/50"
+                    )}>
+                      <Icon 
+                        size={20} 
+                        className="transition-all duration-300 group-hover:scale-110" 
+                      />
+                    </div>
+                    
+                    <span className="text-xs font-semibold transition-all duration-300">
+                      {tab.label}
+                    </span>
+                    
+                    {/* Ripple effect on tap */}
+                    <div className="absolute inset-0 rounded-xl bg-primary/10 opacity-0 group-active:opacity-100 transition-opacity duration-150"></div>
+                  </button>
+                </MoreDrawer>
+              );
+            }
+            
+            // Regular navigation tabs
             return (
               <Link
                 key={tab.id}
