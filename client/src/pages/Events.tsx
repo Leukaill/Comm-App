@@ -12,12 +12,13 @@ export default function Events() {
       description: "Join fellow business professionals for coffee, networking, and meaningful connections to grow your professional network.",
       date: "Dec 15, 2024",
       time: "8:00 AM - 10:00 AM",
-      location: "Downtown Business Center, Conference Room A",
+      location: "Downtown Business Center",
       attendees: 45,
       maxAttendees: 60,
       rsvpStatus: "none" as const,
       category: "Networking",
-      isUpcoming: true
+      isUpcoming: true,
+      imageUrl: "/attached_assets/generated_images/Business_networking_event_photo_ca3a4065.png"
     },
     {
       id: "2",
@@ -30,7 +31,8 @@ export default function Events() {
       maxAttendees: 30,
       rsvpStatus: "going" as const,
       category: "Workshop",
-      isUpcoming: true
+      isUpcoming: true,
+      imageUrl: "/attached_assets/generated_images/Platform_technology_update_c5bd0381.png"
     },
     {
       id: "3",
@@ -38,12 +40,13 @@ export default function Events() {
       description: "Annual summit featuring top business leaders sharing insights on leadership, strategy, and innovation.",
       date: "Jan 10, 2025",
       time: "9:00 AM - 6:00 PM",
-      location: "Grand Conference Center, Main Hall",
+      location: "Grand Conference Center",
       attendees: 180,
       maxAttendees: 200,
       rsvpStatus: "maybe" as const,
       category: "Conference",
-      isUpcoming: true
+      isUpcoming: true,
+      imageUrl: "/attached_assets/generated_images/BPN_Summit_conference_event_460b63ec.png"
     }
   ]);
 
@@ -58,11 +61,12 @@ export default function Events() {
       attendees: 32,
       rsvpStatus: "going" as const,
       category: "General",
-      isUpcoming: false
+      isUpcoming: false,
+      imageUrl: "/attached_assets/generated_images/Business_partnership_program_ed21ecb5.png"
     },
     {
       id: "5",
-      title: "Summer Networking Social",
+      title: "Summer Networking Social", 
       description: "Casual networking event with food, drinks, and great conversations.",
       date: "Aug 20, 2024",
       time: "6:00 PM - 9:00 PM",
@@ -70,7 +74,8 @@ export default function Events() {
       attendees: 85,
       rsvpStatus: "going" as const,
       category: "Social",
-      isUpcoming: false
+      isUpcoming: false,
+      imageUrl: "/attached_assets/generated_images/50K_members_milestone_celebration_5748fd5a.png"
     }
   ]);
 

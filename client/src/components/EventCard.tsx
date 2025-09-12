@@ -1,7 +1,7 @@
-import { Card, CardContent, CardHeader } from "@/components/ui/card";
+import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { Calendar, MapPin, Users, Clock } from "lucide-react";
+import { MapPin, Users } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 interface EventCardProps {
@@ -16,6 +16,7 @@ interface EventCardProps {
   rsvpStatus: "none" | "going" | "maybe" | "not_going";
   category: string;
   isUpcoming: boolean;
+  imageUrl?: string;
   onRSVP: (status: "going" | "maybe" | "not_going") => void;
 }
 
@@ -30,30 +31,18 @@ export default function EventCard({
   rsvpStatus,
   category,
   isUpcoming,
+  imageUrl,
   onRSVP
 }: EventCardProps) {
-  const getCategoryColor = () => {
-    const colors = {
-      "Networking": "bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-300",
-      "Workshop": "bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-300", 
-      "Conference": "bg-purple-100 text-purple-800 dark:bg-purple-900 dark:text-purple-300",
-      "Social": "bg-orange-100 text-orange-800 dark:bg-orange-900 dark:text-orange-300"
-    };
-    return colors[category as keyof typeof colors] || colors.Networking;
+  // Parse date to get day and month for the date badge
+  const parseDate = (dateStr: string) => {
+    const parsedDate = new Date(dateStr);
+    const day = parsedDate.getDate().toString();
+    const month = parsedDate.toLocaleDateString('en-US', { month: 'short' }).toUpperCase();
+    return { day, month };
   };
 
-  const getRSVPButtonVariant = () => {
-    switch (rsvpStatus) {
-      case "going":
-        return "default";
-      case "maybe":
-        return "secondary";
-      case "not_going":
-        return "outline";
-      default:
-        return "outline";
-    }
-  };
+  const { day, month } = parseDate(date);
 
   const getRSVPText = () => {
     switch (rsvpStatus) {
@@ -64,79 +53,103 @@ export default function EventCard({
       case "not_going":
         return "Not Going";
       default:
-        return "RSVP";
+        return "Join";
     }
   };
 
+  const getLocationDistance = () => {
+    // Mock distance - in real app this would be calculated
+    return `${Math.floor(Math.random() * 5) + 1} km`;
+  };
+
   return (
-    <Card className="hover-elevate transition-all" data-testid={`event-card-${title.toLowerCase().replace(/\s+/g, '-')}`}>
-      <CardHeader className="pb-3">
-        <div className="flex items-start justify-between gap-2">
-          <div className="flex-1 min-w-0">
-            <div className="flex items-center gap-2 mb-1">
-              <Badge variant="secondary" className={cn("text-xs", getCategoryColor())}>
-                {category}
-              </Badge>
-              {!isUpcoming && (
-                <Badge variant="outline" className="text-xs">
-                  Past Event
-                </Badge>
-              )}
-            </div>
-            <h3 className="font-semibold text-base leading-tight">
-              {title}
-            </h3>
-          </div>
-        </div>
-      </CardHeader>
-      
-      <CardContent className="space-y-4">
-        <p className="text-sm text-muted-foreground line-clamp-2">
-          {description}
-        </p>
+    <Card 
+      className={cn(
+        "overflow-hidden hover-elevate transition-all duration-200 border-0 shadow-md",
+        isUpcoming ? "shadow-lg" : "opacity-75"
+      )} 
+      data-testid={`event-card-${title.toLowerCase().replace(/\s+/g, '-')}`}
+    >
+      {/* Hero Image Section */}
+      <div className="relative h-40 bg-gradient-to-br from-blue-500 to-purple-600 overflow-hidden">
+        {imageUrl && (
+          <img 
+            src={imageUrl}
+            alt={title}
+            className="w-full h-full object-cover"
+          />
+        )}
         
-        <div className="space-y-2">
-          <div className="flex items-center gap-2 text-sm">
-            <Calendar size={16} className="text-muted-foreground" />
-            <span>{date}</span>
-          </div>
-          
-          <div className="flex items-center gap-2 text-sm">
-            <Clock size={16} className="text-muted-foreground" />
-            <span>{time}</span>
-          </div>
-          
-          <div className="flex items-center gap-2 text-sm">
-            <MapPin size={16} className="text-muted-foreground" />
-            <span className="truncate">{location}</span>
-          </div>
-          
-          <div className="flex items-center gap-2 text-sm">
-            <Users size={16} className="text-muted-foreground" />
-            <span>
-              {attendees} attending
-              {maxAttendees && ` (${maxAttendees} max)`}
-            </span>
-          </div>
+        {/* Date Badge */}
+        <div className="absolute top-3 left-3 bg-white rounded-lg p-2 shadow-md min-w-[48px] text-center">
+          <div className="text-lg font-bold text-blue-600 leading-none">{day}</div>
+          <div className="text-xs font-medium text-gray-600 leading-none mt-0.5">{month}</div>
         </div>
-        
-        {isUpcoming && (
-          <div className="flex gap-2 pt-2">
-            <Button
-              variant={getRSVPButtonVariant()}
-              size="sm"
-              onClick={() => {
-                const newStatus = rsvpStatus === "going" ? "none" : "going";
-                onRSVP(newStatus as "going");
-                console.log(`RSVP: ${newStatus}`);
-              }}
-              data-testid="button-rsvp"
-              className="flex-1"
-            >
-              {getRSVPText()}
-            </Button>
+
+        {/* Category Badge */}
+        {!isUpcoming && (
+          <div className="absolute top-3 right-3">
+            <Badge variant="secondary" className="bg-black/20 text-white border-0 backdrop-blur-sm">
+              Past Event
+            </Badge>
           </div>
         )}
+      </div>
+
+      {/* Content Section */}
+      <CardContent className="p-4">
+        <div className="space-y-3">
+          {/* Title and Time */}
+          <div>
+            <h3 className="font-semibold text-lg leading-tight mb-1">
+              {title}
+            </h3>
+            <p className="text-sm text-muted-foreground">
+              {time}
+            </p>
+          </div>
+
+          {/* Location and Distance */}
+          <div className="flex items-center gap-1.5 text-sm text-muted-foreground">
+            <MapPin size={14} />
+            <span className="truncate flex-1">{location}</span>
+            <span className="text-blue-600 font-medium">{getLocationDistance()}</span>
+          </div>
+
+          {/* Attendees and Join Button */}
+          <div className="flex items-center justify-between gap-3 pt-1">
+            <div className="flex items-center gap-2">
+              {/* Mock attendee avatars */}
+              <div className="flex -space-x-2">
+                <div className="w-6 h-6 rounded-full bg-gradient-to-br from-blue-400 to-blue-600 border-2 border-white"></div>
+                <div className="w-6 h-6 rounded-full bg-gradient-to-br from-green-400 to-green-600 border-2 border-white"></div>
+                <div className="w-6 h-6 rounded-full bg-gradient-to-br from-purple-400 to-purple-600 border-2 border-white"></div>
+              </div>
+              <span className="text-sm font-medium text-blue-600">
+                +{attendees} Attending
+              </span>
+            </div>
+
+            {isUpcoming && (
+              <Button
+                onClick={() => {
+                  const newStatus = rsvpStatus === "going" ? "none" : "going";
+                  onRSVP(newStatus as "going");
+                }}
+                size="sm"
+                className={cn(
+                  "px-6 py-2 rounded-full font-medium transition-all",
+                  rsvpStatus === "going" 
+                    ? "bg-green-600 hover:bg-green-700 text-white" 
+                    : "bg-blue-600 hover:bg-blue-700 text-white"
+                )}
+                data-testid="button-rsvp"
+              >
+                {getRSVPText()}
+              </Button>
+            )}
+          </div>
+        </div>
       </CardContent>
     </Card>
   );
