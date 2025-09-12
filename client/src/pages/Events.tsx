@@ -1,5 +1,6 @@
 import { useState } from "react";
 import EventCard from "@/components/EventCard";
+import EventDetail from "@/components/EventDetail";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Button } from "@/components/ui/button";
@@ -7,6 +8,7 @@ import { Calendar } from "@/components/ui/calendar";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { CalendarIcon, List } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
+import { cn } from "@/lib/utils";
 
 export default function Events() {
   const [selectedDate, setSelectedDate] = useState<Date>();
@@ -88,6 +90,7 @@ export default function Events() {
   ]);
 
   const [rsvpStatuses, setRsvpStatuses] = useState<Record<string, "none" | "going" | "maybe" | "not_going">>({});
+  const [selectedEvent, setSelectedEvent] = useState<string | null>(null);
 
   const handleRSVP = (eventId: string, status: "going" | "maybe" | "not_going") => {
     setRsvpStatuses(prev => ({
@@ -95,6 +98,21 @@ export default function Events() {
       [eventId]: status
     }));
     console.log(`RSVP for event ${eventId}: ${status}`);
+  };
+
+  const handleEventClick = (eventId: string) => {
+    setSelectedEvent(eventId);
+  };
+
+  const getSelectedEventData = () => {
+    if (!selectedEvent) return null;
+    const allEvents = [...upcomingEvents, ...pastEvents];
+    const event = allEvents.find(e => e.id === selectedEvent);
+    if (!event) return null;
+    return {
+      ...event,
+      rsvpStatus: rsvpStatuses[event.id] || event.rsvpStatus
+    };
   };
 
   // Combine all events for calendar view
@@ -207,8 +225,9 @@ export default function Events() {
         </div>
 
         <TabsContent value="upcoming" className="flex-1 min-h-0">
-          <div className="h-full overflow-y-auto">
-            <div className="container mx-auto max-w-screen-2xl p-4 sm:p-6 lg:p-8 space-y-4 sm:space-y-6 pb-[calc(env(safe-area-inset-bottom)+80px)] md:pb-6">
+          {/* Mobile: Single column layout */}
+          <div className="md:hidden h-full overflow-y-auto">
+            <div className="container mx-auto max-w-screen-2xl p-4 sm:p-6 space-y-4 sm:space-y-6 pb-[calc(env(safe-area-inset-bottom)+80px)]">
               {upcomingEvents.map((event) => (
                 <EventCard
                   key={event.id}
@@ -219,11 +238,52 @@ export default function Events() {
               ))}
             </div>
           </div>
+          
+          {/* Desktop/Tablet: Split-view layout */}
+          <div className="hidden md:flex h-full">
+            {/* Left Panel - Event List */}
+            <div className="w-1/2 lg:w-2/5 border-r border-border overflow-y-auto">
+              <div className="p-4 lg:p-6 space-y-4">
+                {upcomingEvents.map((event) => (
+                  <div
+                    key={event.id}
+                    className={cn(
+                      "cursor-pointer transition-all duration-200 rounded-lg border",
+                      selectedEvent === event.id 
+                        ? "ring-2 ring-primary border-primary bg-primary/5" 
+                        : "border-border hover:border-primary/50 hover:bg-muted/30"
+                    )}
+                    onClick={() => handleEventClick(event.id)}
+                  >
+                    <EventCard
+                      {...event}
+                      rsvpStatus={rsvpStatuses[event.id] || event.rsvpStatus}
+                      onRSVP={(status) => {
+                        handleRSVP(event.id, status);
+                        handleEventClick(event.id); // Keep selected when RSVP changes
+                      }}
+                    />
+                  </div>
+                ))}
+              </div>
+            </div>
+            
+            {/* Right Panel - Event Detail */}
+            <div className="flex-1 overflow-y-auto">
+              <div className="p-4 lg:p-6">
+                <EventDetail 
+                  event={getSelectedEventData()} 
+                  onRSVP={(status) => selectedEvent && handleRSVP(selectedEvent, status)}
+                />
+              </div>
+            </div>
+          </div>
         </TabsContent>
 
         <TabsContent value="past" className="flex-1 min-h-0">
-          <div className="h-full overflow-y-auto">
-            <div className="container mx-auto max-w-screen-2xl p-4 sm:p-6 lg:p-8 space-y-4 sm:space-y-6 pb-[calc(env(safe-area-inset-bottom)+80px)] md:pb-6">
+          {/* Mobile: Single column layout */}
+          <div className="md:hidden h-full overflow-y-auto">
+            <div className="container mx-auto max-w-screen-2xl p-4 sm:p-6 space-y-4 sm:space-y-6 pb-[calc(env(safe-area-inset-bottom)+80px)]">
               {pastEvents.map((event) => (
                 <EventCard
                   key={event.id}
@@ -232,6 +292,46 @@ export default function Events() {
                   onRSVP={(status) => handleRSVP(event.id, status)}
                 />
               ))}
+            </div>
+          </div>
+          
+          {/* Desktop/Tablet: Split-view layout */}
+          <div className="hidden md:flex h-full">
+            {/* Left Panel - Event List */}
+            <div className="w-1/2 lg:w-2/5 border-r border-border overflow-y-auto">
+              <div className="p-4 lg:p-6 space-y-4">
+                {pastEvents.map((event) => (
+                  <div
+                    key={event.id}
+                    className={cn(
+                      "cursor-pointer transition-all duration-200 rounded-lg border",
+                      selectedEvent === event.id 
+                        ? "ring-2 ring-primary border-primary bg-primary/5" 
+                        : "border-border hover:border-primary/50 hover:bg-muted/30"
+                    )}
+                    onClick={() => handleEventClick(event.id)}
+                  >
+                    <EventCard
+                      {...event}
+                      rsvpStatus={rsvpStatuses[event.id] || event.rsvpStatus}
+                      onRSVP={(status) => {
+                        handleRSVP(event.id, status);
+                        handleEventClick(event.id); // Keep selected when RSVP changes
+                      }}
+                    />
+                  </div>
+                ))}
+              </div>
+            </div>
+            
+            {/* Right Panel - Event Detail */}
+            <div className="flex-1 overflow-y-auto">
+              <div className="p-4 lg:p-6">
+                <EventDetail 
+                  event={getSelectedEventData()} 
+                  onRSVP={(status) => selectedEvent && handleRSVP(selectedEvent, status)}
+                />
+              </div>
             </div>
           </div>
         </TabsContent>

@@ -1,12 +1,15 @@
 import { useState } from "react";
 import NoteCard from "@/components/NoteCard";
+import NoteDetail from "@/components/NoteDetail";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Input } from "@/components/ui/input";
 import { Search, FileText, Sparkles } from "lucide-react";
+import { cn } from "@/lib/utils";
 
 export default function Notes() {
   const [searchQuery, setSearchQuery] = useState("");
+  const [selectedNote, setSelectedNote] = useState<string | null>(null);
   
   // Todo: remove mock functionality
   const [allNotes] = useState([
@@ -77,8 +80,20 @@ export default function Notes() {
   const readNotes = filteredNotes.filter(note => note.isRead);
 
   const handleNoteClick = (noteId: string) => {
+    setSelectedNote(noteId);
     console.log(`Opening note: ${noteId}`);
-    // Todo: navigate to note detail view
+  };
+
+  const handleMarkAsRead = () => {
+    if (selectedNote) {
+      console.log(`Marking note as read: ${selectedNote}`);
+      // Todo: implement mark as read functionality
+    }
+  };
+
+  const getSelectedNoteData = () => {
+    if (!selectedNote) return null;
+    return allNotes.find(note => note.id === selectedNote) || null;
   };
 
   return (
@@ -156,7 +171,8 @@ export default function Notes() {
         </div>
 
         <TabsContent value="unread" className="flex-1 mt-0 overflow-y-auto">
-          <div className="px-4 sm:px-6 space-y-4 pb-[calc(env(safe-area-inset-bottom)+80px)] md:pb-6">
+          {/* Mobile: Single column layout */}
+          <div className="md:hidden px-4 sm:px-6 space-y-4 pb-[calc(env(safe-area-inset-bottom)+80px)]">
             {unreadNotes.length > 0 ? (
               unreadNotes.map((note, index) => (
                 <div
@@ -180,10 +196,54 @@ export default function Notes() {
               </div>
             )}
           </div>
+          
+          {/* Desktop/Tablet: Split-view layout */}
+          <div className="hidden md:flex h-full">
+            {/* Left Panel - Notes List */}
+            <div className="w-1/2 lg:w-2/5 border-r border-border overflow-y-auto">
+              <div className="p-4 lg:p-6 space-y-4">
+                {unreadNotes.length > 0 ? (
+                  unreadNotes.map((note, index) => (
+                    <div
+                      key={note.id}
+                      className={cn(
+                        "cursor-pointer transition-all duration-200 rounded-lg border",
+                        selectedNote === note.id 
+                          ? "ring-2 ring-primary border-primary bg-primary/5" 
+                          : "border-border hover:border-primary/50 hover:bg-muted/30"
+                      )}
+                      onClick={() => handleNoteClick(note.id)}
+                    >
+                      <NoteCard {...note} onClick={() => handleNoteClick(note.id)} />
+                    </div>
+                  ))
+                ) : (
+                  <div className="text-center py-16">
+                    <div className="mb-4">
+                      <Sparkles className="h-16 w-16 text-muted-foreground/30 mx-auto" />
+                    </div>
+                    <h3 className="text-lg font-semibold text-foreground mb-2">All caught up!</h3>
+                    <p className="text-muted-foreground">No unread notes to display</p>
+                  </div>
+                )}
+              </div>
+            </div>
+            
+            {/* Right Panel - Note Detail */}
+            <div className="flex-1 overflow-y-auto">
+              <div className="p-4 lg:p-6">
+                <NoteDetail 
+                  note={getSelectedNoteData()} 
+                  onMarkAsRead={handleMarkAsRead}
+                />
+              </div>
+            </div>
+          </div>
         </TabsContent>
 
         <TabsContent value="all" className="flex-1 mt-0 overflow-y-auto">
-          <div className="px-4 sm:px-6 space-y-4 pb-[calc(env(safe-area-inset-bottom)+80px)] md:pb-6">
+          {/* Mobile: Single column layout */}
+          <div className="md:hidden px-4 sm:px-6 space-y-4 pb-[calc(env(safe-area-inset-bottom)+80px)]">
             {filteredNotes.map((note, index) => (
               <div
                 key={note.id}
@@ -197,10 +257,44 @@ export default function Notes() {
               </div>
             ))}
           </div>
+          
+          {/* Desktop/Tablet: Split-view layout */}
+          <div className="hidden md:flex h-full">
+            {/* Left Panel - Notes List */}
+            <div className="w-1/2 lg:w-2/5 border-r border-border overflow-y-auto">
+              <div className="p-4 lg:p-6 space-y-4">
+                {filteredNotes.map((note, index) => (
+                  <div
+                    key={note.id}
+                    className={cn(
+                      "cursor-pointer transition-all duration-200 rounded-lg border",
+                      selectedNote === note.id 
+                        ? "ring-2 ring-primary border-primary bg-primary/5" 
+                        : "border-border hover:border-primary/50 hover:bg-muted/30"
+                    )}
+                    onClick={() => handleNoteClick(note.id)}
+                  >
+                    <NoteCard {...note} onClick={() => handleNoteClick(note.id)} />
+                  </div>
+                ))}
+              </div>
+            </div>
+            
+            {/* Right Panel - Note Detail */}
+            <div className="flex-1 overflow-y-auto">
+              <div className="p-4 lg:p-6">
+                <NoteDetail 
+                  note={getSelectedNoteData()} 
+                  onMarkAsRead={handleMarkAsRead}
+                />
+              </div>
+            </div>
+          </div>
         </TabsContent>
 
         <TabsContent value="read" className="flex-1 mt-0 overflow-y-auto">
-          <div className="px-4 sm:px-6 space-y-4 pb-[calc(env(safe-area-inset-bottom)+80px)] md:pb-6">
+          {/* Mobile: Single column layout */}
+          <div className="md:hidden px-4 sm:px-6 space-y-4 pb-[calc(env(safe-area-inset-bottom)+80px)]">
             {readNotes.length > 0 ? (
               readNotes.map((note, index) => (
                 <div
@@ -223,6 +317,49 @@ export default function Notes() {
                 <p className="text-muted-foreground">Start reading to see notes here</p>
               </div>
             )}
+          </div>
+          
+          {/* Desktop/Tablet: Split-view layout */}
+          <div className="hidden md:flex h-full">
+            {/* Left Panel - Notes List */}
+            <div className="w-1/2 lg:w-2/5 border-r border-border overflow-y-auto">
+              <div className="p-4 lg:p-6 space-y-4">
+                {readNotes.length > 0 ? (
+                  readNotes.map((note, index) => (
+                    <div
+                      key={note.id}
+                      className={cn(
+                        "cursor-pointer transition-all duration-200 rounded-lg border",
+                        selectedNote === note.id 
+                          ? "ring-2 ring-primary border-primary bg-primary/5" 
+                          : "border-border hover:border-primary/50 hover:bg-muted/30"
+                      )}
+                      onClick={() => handleNoteClick(note.id)}
+                    >
+                      <NoteCard {...note} onClick={() => handleNoteClick(note.id)} />
+                    </div>
+                  ))
+                ) : (
+                  <div className="text-center py-16">
+                    <div className="mb-4">
+                      <FileText className="h-16 w-16 text-muted-foreground/30 mx-auto" />
+                    </div>
+                    <h3 className="text-lg font-semibold text-foreground mb-2">No read notes yet</h3>
+                    <p className="text-muted-foreground">Start reading to see notes here</p>
+                  </div>
+                )}
+              </div>
+            </div>
+            
+            {/* Right Panel - Note Detail */}
+            <div className="flex-1 overflow-y-auto">
+              <div className="p-4 lg:p-6">
+                <NoteDetail 
+                  note={getSelectedNoteData()} 
+                  onMarkAsRead={handleMarkAsRead}
+                />
+              </div>
+            </div>
           </div>
         </TabsContent>
       </Tabs>
