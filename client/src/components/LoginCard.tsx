@@ -3,10 +3,11 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Checkbox } from "@/components/ui/checkbox";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { ChevronLeft, Eye, EyeOff, Mail, Lock, User, ArrowRight, Facebook, Twitter, Chrome, Apple } from "lucide-react";
 import { cn } from "@/lib/utils";
 import GeometryBackground from "./GeometryBackground";
+import { useTheme } from "./ThemeProvider";
 import bpnLogoUrl from "@assets/logo_1757669896337.png";
 
 interface LoginCardProps {
@@ -25,6 +26,9 @@ export default function LoginCard({ onLogin, isLoading = false }: LoginCardProps
   const [showPassword, setShowPassword] = useState(false);
   const [rememberMe, setRememberMe] = useState(false);
   const [agreeToTerms, setAgreeToTerms] = useState(false);
+  
+  // Auto-detect system theme for authentication page
+  const { setTheme } = useTheme();
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -54,6 +58,14 @@ export default function LoginCard({ onLogin, isLoading = false }: LoginCardProps
     }
   };
 
+  // Auto-detect system theme only if no user preference exists
+  useEffect(() => {
+    const existingTheme = localStorage.getItem("bpn-ui-theme");
+    if (!existingTheme) {
+      setTheme("system");
+    }
+  }, [setTheme]);
+
   const resetForm = () => {
     setEmail("");
     setPassword("");
@@ -65,9 +77,9 @@ export default function LoginCard({ onLogin, isLoading = false }: LoginCardProps
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center p-4 relative overflow-hidden bg-[hsl(var(--geometric-neutral-50))] dark:bg-[hsl(var(--geometric-neutral-50))]">
-      {/* Premium Geometric Background - No Gradients */}
-      <GeometryBackground className="opacity-60 dark:opacity-40" />
+    <div className="min-h-screen flex items-center justify-center p-4 relative overflow-hidden bg-gradient-to-br from-blue-600 via-purple-600 to-blue-800 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900">
+      {/* Premium Geometric Background */}
+      <GeometryBackground className="opacity-30 dark:opacity-60" />
 
       {/* Content */}
       <div className="relative z-20 w-full max-w-md">
@@ -99,12 +111,7 @@ export default function LoginCard({ onLogin, isLoading = false }: LoginCardProps
             <div className="space-y-4 pt-12">
               <Button 
                 onClick={() => { resetForm(); setScreen('signin'); }}
-                className="w-full h-16 text-lg font-semibold bg-[hsl(var(--geometric-primary))] hover:bg-[hsl(var(--geometric-primary-dark))] text-white border-0"
-                style={{
-                  boxShadow: 'var(--shadow-geometric-lg)',
-                  borderRadius: 'var(--radius-xl)',
-                  transition: 'all var(--motion-duration-normal) var(--motion-ease-out)'
-                }}
+                className="w-full h-16 text-lg font-semibold bg-blue-600 hover:bg-blue-700 text-white shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-[1.02]"
                 data-testid="button-signin-nav"
               >
                 Sign In
@@ -112,11 +119,7 @@ export default function LoginCard({ onLogin, isLoading = false }: LoginCardProps
               <Button 
                 onClick={() => { resetForm(); setScreen('signup'); }}
                 variant="outline"
-                className="w-full h-16 text-lg font-semibold border-2 border-[hsl(var(--geometric-neutral-300))] text-[hsl(var(--geometric-neutral-700))] hover:bg-[hsl(var(--geometric-neutral-100))] dark:border-[hsl(var(--geometric-neutral-700))] dark:text-[hsl(var(--geometric-neutral-300))] dark:hover:bg-[hsl(var(--geometric-neutral-200))]"
-                style={{
-                  borderRadius: 'var(--radius-xl)',
-                  transition: 'all var(--motion-duration-normal) var(--motion-ease-out)'
-                }}
+                className="w-full h-16 text-lg font-semibold border-2 border-white/30 text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800 backdrop-blur-sm transition-all duration-300 hover:scale-[1.02]"
                 data-testid="button-signup-nav"
               >
                 Create Account
@@ -288,13 +291,12 @@ export default function LoginCard({ onLogin, isLoading = false }: LoginCardProps
                   <div className="space-y-2">
                     <Label 
                       htmlFor="confirmPassword" 
-                      className="font-medium text-[hsl(var(--geometric-neutral-700))] dark:text-[hsl(var(--geometric-neutral-800))]"
-                      style={{ fontSize: 'var(--font-size-sm)' }}
+                      className="font-medium text-gray-700 dark:text-gray-300"
                     >
                       Confirm Password
                     </Label>
                     <div className="relative">
-                      <Lock className="absolute left-3 top-1/2 transform -translate-y-1/2 text-[hsl(var(--geometric-neutral-400))]" size={18} />
+                      <Lock className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" size={18} />
                       <Input
                         id="confirmPassword"
                         type="password"
@@ -303,10 +305,15 @@ export default function LoginCard({ onLogin, isLoading = false }: LoginCardProps
                         placeholder="Confirm your password"
                         data-testid="input-confirm-password"
                         required
-                        className="h-12 pl-10 pr-4 border border-[hsl(var(--geometric-neutral-300))] focus:border-[hsl(var(--geometric-primary))] dark:border-[hsl(var(--geometric-neutral-700))] dark:focus:border-[hsl(var(--geometric-primary))] transition-colors"
-                        style={{ borderRadius: 'var(--radius-lg)' }}
+                        className={cn(
+                          "h-12 pl-10 pr-4 border border-gray-200 dark:border-gray-700 focus:border-blue-500 dark:focus:border-blue-400 transition-colors",
+                          password !== confirmPassword && confirmPassword && "border-red-500 focus:border-red-500"
+                        )}
                       />
                     </div>
+                    {password !== confirmPassword && confirmPassword && (
+                      <p className="text-sm text-red-500 mt-1">Passwords do not match</p>
+                    )}
                   </div>
                 )}
 
@@ -364,17 +371,11 @@ export default function LoginCard({ onLogin, isLoading = false }: LoginCardProps
                 <Button 
                   type="submit" 
                   className={cn(
-                    "w-full h-14 font-semibold bg-[hsl(var(--geometric-primary))] hover:bg-[hsl(var(--geometric-primary-dark))] text-white border-0",
+                    "w-full h-14 text-lg font-semibold bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-[1.02] disabled:hover:scale-100",
                     (screen === 'signin' && (!email || !password)) || 
                     (screen === 'signup' && (!email || !password || !fullName || !agreeToTerms || password !== confirmPassword)) ? 
                     "opacity-50 cursor-not-allowed" : ""
                   )}
-                  style={{
-                    fontSize: 'var(--font-size-lg)',
-                    borderRadius: 'var(--radius-xl)',
-                    boxShadow: 'var(--shadow-geometric-md)',
-                    transition: 'all var(--motion-duration-normal) var(--motion-ease-out)'
-                  }}
                   disabled={
                     isLoading || 
                     (screen === 'signin' && (!email || !password)) ||
