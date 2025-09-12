@@ -8,133 +8,110 @@ export default function BottomNavigation() {
   const [location] = useLocation();
   const [isMoreDrawerOpen, setIsMoreDrawerOpen] = useState(false);
   
-  const leftTabs = [
-    { id: "home", path: "/", icon: Home, label: "Home" },
+  const allTabs = [
     { id: "events", path: "/events", icon: Calendar, label: "Events" },
-  ];
-  
-  const rightTabs = [
     { id: "network", path: "/network", icon: Users, label: "Network" },
+    { id: "home", path: "/", icon: Home, label: "Home", isCenter: true },
     { id: "profile", path: "/profile", icon: User, label: "Profile" },
+    { id: "more", path: "", icon: Menu, label: "More", isDrawer: true },
   ];
 
-  const renderTabGroup = (tabs: typeof leftTabs) => {
-    return tabs.map((tab) => {
-      const Icon = tab.icon;
-      const isActive = location === tab.path;
-      
+  const renderTab = (tab: typeof allTabs[0]) => {
+    const Icon = tab.icon;
+    const isActive = location === tab.path;
+    const isCenterHome = tab.isCenter;
+    
+    // Handle drawer tab
+    if (tab.isDrawer) {
+      return (
+        <MoreDrawer 
+          key={tab.id}
+          isOpen={isMoreDrawerOpen} 
+          onOpenChange={setIsMoreDrawerOpen}
+        >
+          <button
+            data-testid={`tab-${tab.id}`}
+            aria-label="Open more features"
+            className="flex flex-col items-center justify-center p-3 transition-all duration-300 group relative"
+          >
+            <div className="flex items-center justify-center w-12 h-12 rounded-full transition-all duration-300 group-hover:bg-muted/20">
+              <Icon 
+                size={20} 
+                className="text-muted-foreground transition-all duration-300 group-hover:scale-110 group-hover:text-foreground" 
+              />
+            </div>
+          </button>
+        </MoreDrawer>
+      );
+    }
+    
+    // Center home button with special styling
+    if (isCenterHome) {
       return (
         <Link
           key={tab.id}
           href={tab.path}
           data-testid={`tab-${tab.id}`}
           aria-current={isActive ? "page" : undefined}
-          className={cn(
-            "flex flex-col items-center gap-1.5 px-3 py-2 rounded-xl transition-all duration-300 min-h-[64px] flex-1 relative group",
-            isActive 
-              ? "text-primary transform scale-105" 
-              : "text-muted-foreground hover:text-foreground hover:scale-105"
-          )}
+          className="flex flex-col items-center justify-center p-2 transition-all duration-300 group relative"
         >
-          {/* Active background with glow */}
-          {isActive && (
-            <div className="absolute inset-0 bg-gradient-to-t from-primary/20 to-primary/10 rounded-xl blur-sm"></div>
-          )}
-          
-          {/* Icon container with enhanced effects */}
+          {/* Glowing background circle for center button */}
           <div className={cn(
-            "relative flex items-center justify-center w-8 h-8 rounded-lg transition-all duration-300",
+            "absolute inset-0 rounded-full transition-all duration-500",
             isActive 
-              ? "bg-primary/10 shadow-lg shadow-primary/25" 
-              : "group-hover:bg-muted/50"
+              ? "bg-gradient-to-br from-primary via-primary to-primary/80 shadow-2xl shadow-primary/40" 
+              : "bg-gradient-to-br from-primary/60 to-primary/40 shadow-lg shadow-primary/20 group-hover:shadow-xl group-hover:shadow-primary/30"
           )}>
-            <Icon 
-              size={20} 
-              className={cn(
-                "transition-all duration-300",
-                isActive 
-                  ? "text-primary drop-shadow-sm" 
-                  : "group-hover:scale-110"
-              )} 
-            />
+            {/* Extra glow effect */}
+            <div className="absolute inset-0 rounded-full bg-gradient-to-br from-white/20 to-transparent opacity-40"></div>
           </div>
           
-          <span className={cn(
-            "text-xs font-semibold transition-all duration-300",
-            isActive ? "text-primary" : ""
-          )}>
-            {tab.label}
-          </span>
-          
-          {/* Active indicator */}
-          {isActive && (
-            <div className="absolute -bottom-0.5 left-1/2 transform -translate-x-1/2 w-8 h-1 bg-gradient-to-r from-primary/50 via-primary to-primary/50 rounded-full shadow-lg shadow-primary/50"></div>
-          )}
-          
-          {/* Ripple effect on tap */}
-          <div className="absolute inset-0 rounded-xl bg-primary/10 opacity-0 group-active:opacity-100 transition-opacity duration-150"></div>
+          <div className="relative flex items-center justify-center w-14 h-14 rounded-full">
+            <Icon 
+              size={24} 
+              className="text-white drop-shadow-md transition-all duration-300 group-hover:scale-110" 
+            />
+          </div>
         </Link>
       );
-    });
+    }
+    
+    // Regular tab
+    return (
+      <Link
+        key={tab.id}
+        href={tab.path}
+        data-testid={`tab-${tab.id}`}
+        aria-current={isActive ? "page" : undefined}
+        className="flex flex-col items-center justify-center p-3 transition-all duration-300 group relative"
+      >
+        <div className={cn(
+          "flex items-center justify-center w-12 h-12 rounded-full transition-all duration-300",
+          isActive 
+            ? "bg-primary/10 text-primary" 
+            : "text-muted-foreground group-hover:bg-muted/20 group-hover:text-foreground"
+        )}>
+          <Icon 
+            size={20} 
+            className="transition-all duration-300 group-hover:scale-110" 
+          />
+        </div>
+      </Link>
+    );
   };
 
   return (
-    <nav role="navigation" aria-label="Primary navigation" className="fixed bottom-0 left-0 right-0 bg-card/95 backdrop-blur-xl border-t border-border/50 safe-area-inset-bottom shadow-2xl shadow-primary/5">
-      <div className="relative">
-        {/* Gradient overlay */}
-        <div className="absolute inset-0 bg-gradient-to-t from-background/20 to-transparent pointer-events-none"></div>
-        
-        {/* Bottom padding for floating button */}
-        <div className="pb-3">
-          <div className="flex items-center justify-between px-1 py-2 relative">
-            {/* Left tab group */}
-            <div className="flex flex-1 justify-around">
-              {renderTabGroup(leftTabs)}
-            </div>
-            
-            {/* Center spacing for floating button */}
-            <div className="w-16"></div>
-            
-            {/* Right tab group */}
-            <div className="flex flex-1 justify-around">
-              {renderTabGroup(rightTabs)}
-            </div>
+    <nav role="navigation" aria-label="Primary navigation" className="fixed bottom-0 left-0 right-0 safe-area-inset-bottom">
+      <div className="flex justify-center pb-6 px-4">
+        {/* Pill-shaped container */}
+        <div className="relative">
+          {/* Background pill with glassmorphism */}
+          <div className="absolute inset-0 bg-white/90 dark:bg-black/40 backdrop-blur-xl rounded-full shadow-2xl shadow-black/10 dark:shadow-white/5 border border-white/20 dark:border-white/10"></div>
+          
+          {/* Tab container */}
+          <div className="relative flex items-center px-3 py-2 gap-1">
+            {allTabs.map((tab) => renderTab(tab))}
           </div>
-        </div>
-        
-        {/* Floating More Button - Centered and Elevated */}
-        <div className="absolute bottom-6 left-1/2 transform -translate-x-1/2 -translate-y-3">
-          <MoreDrawer 
-            isOpen={isMoreDrawerOpen} 
-            onOpenChange={setIsMoreDrawerOpen}
-          >
-            <button
-              data-testid="button-more-center"
-              aria-label="Open more features"
-              className={cn(
-                "relative w-14 h-14 rounded-full transition-all duration-300 group",
-                "bg-gradient-to-br from-primary/90 to-primary",
-                "ring-2 ring-white/60 dark:ring-white/20",
-                "shadow-lg shadow-primary/20 backdrop-blur-sm",
-                "hover:scale-105 active:scale-95",
-                "focus:outline-none focus:ring-4 focus:ring-primary/30"
-              )}
-            >
-              {/* Subtle glow effect */}
-              <div className="absolute inset-0 rounded-full bg-gradient-to-br from-primary/40 to-primary/20 blur opacity-60 group-hover:opacity-80 transition-opacity duration-300"></div>
-              
-              {/* Icon */}
-              <div className="relative flex items-center justify-center w-full h-full">
-                <Menu 
-                  size={24} 
-                  className="text-primary-foreground transition-all duration-300 group-hover:scale-110 drop-shadow-sm" 
-                />
-              </div>
-              
-              {/* Ripple effect */}
-              <div className="absolute inset-0 rounded-full bg-white/20 opacity-0 group-active:opacity-100 transition-opacity duration-150"></div>
-            </button>
-          </MoreDrawer>
         </div>
       </div>
     </nav>
