@@ -2,8 +2,16 @@ import { useState } from "react";
 import EventCard from "@/components/EventCard";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Button } from "@/components/ui/button";
+import { Calendar } from "@/components/ui/calendar";
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
+import { CalendarIcon, List } from "lucide-react";
+import { Badge } from "@/components/ui/badge";
 
 export default function Events() {
+  const [selectedDate, setSelectedDate] = useState<Date>();
+  const [showCalendar, setShowCalendar] = useState(false);
+  
   // Todo: remove mock functionality
   const [upcomingEvents] = useState([
     {
@@ -89,12 +97,101 @@ export default function Events() {
     console.log(`RSVP for event ${eventId}: ${status}`);
   };
 
+  // Combine all events for calendar view
+  const allEvents = [...upcomingEvents, ...pastEvents];
+
+  // Get events for a specific date
+  const getEventsForDate = (date: Date) => {
+    return allEvents.filter(event => {
+      const eventDate = new Date(event.date);
+      return eventDate.toDateString() === date.toDateString();
+    });
+  };
+
+  // Get dates that have events for calendar highlighting
+  const getEventDates = () => {
+    return allEvents.map(event => new Date(event.date));
+  };
+
+  const eventDates = getEventDates();
+
   return (
     <div className="flex-1 flex flex-col h-full bg-background">
       <header className="bg-card border-b border-border px-4 py-4 shrink-0">
-        <h1 className="text-xl font-semibold" data-testid="page-title">
-          Events
-        </h1>
+        <div className="flex items-center justify-between">
+          <h1 className="text-xl font-semibold" data-testid="page-title">
+            Events
+          </h1>
+          <Dialog open={showCalendar} onOpenChange={setShowCalendar}>
+            <DialogTrigger asChild>
+              <Button variant="outline" size="sm" data-testid="button-calendar">
+                <CalendarIcon className="h-4 w-4 mr-2" />
+                Calendar
+              </Button>
+            </DialogTrigger>
+            <DialogContent className="max-w-md">
+              <DialogHeader>
+                <DialogTitle>Event Calendar</DialogTitle>
+              </DialogHeader>
+              <div className="space-y-4">
+                <Calendar
+                  mode="single"
+                  selected={selectedDate}
+                  onSelect={setSelectedDate}
+                  modifiers={{
+                    hasEvent: eventDates
+                  }}
+                  modifiersStyles={{
+                    hasEvent: {
+                      backgroundColor: 'hsl(var(--primary))',
+                      color: 'hsl(var(--primary-foreground))',
+                      fontWeight: 'bold'
+                    }
+                  }}
+                  className="rounded-md border"
+                  data-testid="event-calendar"
+                />
+                {selectedDate && (
+                  <div className="space-y-2">
+                    <h3 className="font-semibold text-sm">
+                      Events on {selectedDate.toLocaleDateString()}
+                    </h3>
+                    {getEventsForDate(selectedDate).length > 0 ? (
+                      <div className="space-y-2 max-h-40 overflow-y-auto">
+                        {getEventsForDate(selectedDate).map((event) => (
+                          <div
+                            key={event.id}
+                            className="p-2 border rounded-md text-sm space-y-1"
+                            data-testid={`calendar-event-${event.id}`}
+                          >
+                            <div className="font-medium">{event.title}</div>
+                            <div className="text-muted-foreground text-xs">
+                              {event.time}
+                            </div>
+                            <div className="flex items-center gap-1">
+                              <Badge variant="secondary" className="text-xs">
+                                {event.category}
+                              </Badge>
+                              {event.isUpcoming && (
+                                <Badge variant="outline" className="text-xs">
+                                  Upcoming
+                                </Badge>
+                              )}
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+                    ) : (
+                      <p className="text-sm text-muted-foreground">
+                        No events on this date
+                      </p>
+                    )}
+                  </div>
+                )}
+              </div>
+            </DialogContent>
+          </Dialog>
+        </div>
       </header>
 
       <Tabs defaultValue="upcoming" className="flex-1 flex flex-col min-h-0">
