@@ -1,111 +1,136 @@
-import { useState } from "react";
-import PostCard from "@/components/PostCard";
-import NotificationBanner from "@/components/NotificationBanner";
-import FloatingActionButton from "@/components/FloatingActionButton";
+import AnnouncementCarousel from "@/components/AnnouncementCarousel";
+import BPNStatsSection from "@/components/BPNStatsSection";
+import QuickActionsGrid from "@/components/QuickActionsGrid";
 import { ScrollArea } from "@/components/ui/scroll-area";
+import { Card, CardContent } from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
+import { CalendarDays, Users, Trophy, Zap } from "lucide-react";
 
 export default function Home() {
-  // Todo: remove mock functionality
-  const [notifications, setNotifications] = useState([
-    {
-      id: "1",
-      type: "event" as const,
-      title: "Networking Event Tomorrow",
-      message: "Monthly Networking Breakfast at 8 AM",
-      timestamp: "10 minutes ago",
-      isRead: false,
-      actionLabel: "View Event"
-    }
-  ]);
-
-  const [posts] = useState([
-    {
-      id: "1",
-      author: {
-        name: "Sarah Wilson",
-        title: "Marketing Director at TechCorp",
-        avatar: undefined
-      },
-      content: "Just completed an amazing project with the BPN community! The collaboration and support from fellow professionals has been incredible. Looking forward to sharing insights at next week's networking event.",
-      timestamp: "2 hours ago",
-      likes: 24,
-      comments: 8,
-      isLiked: false,
-      expiresIn: "28 days"
-    },
-    {
-      id: "2",
-      author: {
-        name: "Michael Chen", 
-        title: "Senior Consultant",
-        avatar: undefined
-      },
-      content: "Excited to announce that our team just secured a major partnership! Thanks to the connections made through BPN. Networking really works when you put in the effort.",
-      timestamp: "5 hours ago",
-      likes: 42,
-      comments: 15,
-      isLiked: true,
-      expiresIn: "27 days"
-    },
-    {
-      id: "3",
-      author: {
-        name: "Alice Johnson",
-        title: "Product Manager at InnovateTech",
-        avatar: undefined
-      },
-      content: "Looking for feedback on our new product launch strategy. Anyone with experience in B2B SaaS launches available for a quick chat?",
-      timestamp: "1 day ago",
-      likes: 18,
-      comments: 12,
-      isLiked: false,
-      expiresIn: "26 days"
-    }
-  ]);
-
-  const handleDismissNotification = (id: string) => {
-    setNotifications(prev => prev.filter(n => n.id !== id));
-  };
-
   return (
-    <div className="flex-1 flex flex-col h-full">
-      <header className="bg-card border-b border-border px-4 py-3">
-        <h1 className="text-xl font-semibold" data-testid="page-title">
-          Home Feed
-        </h1>
+    <div className="flex-1 flex flex-col h-full bg-gradient-to-br from-background via-background to-primary/5">
+      {/* Header */}
+      <header className="bg-card/95 backdrop-blur-xl border-b border-border/50 px-4 py-3 relative overflow-hidden">
+        <div className="absolute inset-0 bg-gradient-to-r from-primary/5 via-transparent to-primary/5 opacity-50"></div>
+        <div className="relative z-10 flex items-center justify-between">
+          <div>
+            <h1 className="text-xl font-bold bg-gradient-to-r from-primary to-primary/80 bg-clip-text text-transparent" data-testid="page-title">
+              BPN Hub
+            </h1>
+            <p className="text-xs text-muted-foreground font-medium">Latest updates & opportunities</p>
+          </div>
+          <Badge className="bg-gradient-to-r from-green-500/10 to-green-600/10 text-green-600 border-green-500/20">
+            Live
+          </Badge>
+        </div>
       </header>
 
       <ScrollArea className="flex-1">
-        <div className="p-4 space-y-4 pb-24">
-          {/* Notifications */}
-          {notifications.map((notification) => (
-            <NotificationBanner
-              key={notification.id}
-              {...notification}
-              onDismiss={() => handleDismissNotification(notification.id)}
-              onAction={() => console.log(`Notification action: ${notification.title}`)}
-            />
-          ))}
+        <div className="p-4 space-y-6 pb-24">
+          {/* Main Announcements Carousel */}
+          <AnnouncementCarousel />
 
-          {/* Posts Feed */}
+          {/* BPN Impact Stats */}
+          <BPNStatsSection />
+
+          {/* Quick Actions Grid */}
+          <QuickActionsGrid />
+
+          {/* Recent Highlights */}
           <div className="space-y-4">
-            {posts.map((post) => (
-              <PostCard
-                key={post.id}
-                {...post}
-                onLike={() => console.log(`Liked post: ${post.id}`)}
-                onComment={() => console.log(`Comment on post: ${post.id}`)}
-                onShare={() => console.log(`Share post: ${post.id}`)}
-              />
-            ))}
+            <div className="text-center space-y-2">
+              <h2 className="text-2xl font-bold bg-gradient-to-r from-primary to-primary/80 bg-clip-text text-transparent">
+                Recent Highlights
+              </h2>
+              <p className="text-muted-foreground text-sm">
+                Key moments from our community
+              </p>
+            </div>
+
+            <div className="grid gap-4 md:grid-cols-2">
+              {/* Event Highlight */}
+              <Card className="hover-elevate active-elevate-2 bg-gradient-to-br from-card/95 to-card/80 backdrop-blur-sm border-border/50 transition-all duration-300">
+                <CardContent className="p-4">
+                  <div className="flex items-start gap-3">
+                    <div className="p-2 rounded-lg bg-blue-500/10">
+                      <CalendarDays size={20} className="text-blue-600" />
+                    </div>
+                    <div className="flex-1 space-y-2">
+                      <h3 className="font-semibold text-sm">Success Stories Summit</h3>
+                      <p className="text-xs text-muted-foreground">
+                        300+ professionals shared their journeys
+                      </p>
+                      <Badge variant="secondary" className="text-xs">
+                        Last Month
+                      </Badge>
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
+
+              {/* Community Highlight */}
+              <Card className="hover-elevate active-elevate-2 bg-gradient-to-br from-card/95 to-card/80 backdrop-blur-sm border-border/50 transition-all duration-300">
+                <CardContent className="p-4">
+                  <div className="flex items-start gap-3">
+                    <div className="p-2 rounded-lg bg-green-500/10">
+                      <Users size={20} className="text-green-600" />
+                    </div>
+                    <div className="flex-1 space-y-2">
+                      <h3 className="font-semibold text-sm">New Partnerships</h3>
+                      <p className="text-xs text-muted-foreground">
+                        50+ corporate partners joined this quarter
+                      </p>
+                      <Badge variant="secondary" className="text-xs">
+                        This Quarter
+                      </Badge>
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
+
+              {/* Achievement Highlight */}
+              <Card className="hover-elevate active-elevate-2 bg-gradient-to-br from-card/95 to-card/80 backdrop-blur-sm border-border/50 transition-all duration-300">
+                <CardContent className="p-4">
+                  <div className="flex items-start gap-3">
+                    <div className="p-2 rounded-lg bg-yellow-500/10">
+                      <Trophy size={20} className="text-yellow-600" />
+                    </div>
+                    <div className="flex-1 space-y-2">
+                      <h3 className="font-semibold text-sm">Excellence Awards</h3>
+                      <p className="text-xs text-muted-foreground">
+                        25 outstanding members recognized globally
+                      </p>
+                      <Badge variant="secondary" className="text-xs">
+                        Awards Night
+                      </Badge>
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
+
+              {/* Innovation Highlight */}
+              <Card className="hover-elevate active-elevate-2 bg-gradient-to-br from-card/95 to-card/80 backdrop-blur-sm border-border/50 transition-all duration-300">
+                <CardContent className="p-4">
+                  <div className="flex items-start gap-3">
+                    <div className="p-2 rounded-lg bg-purple-500/10">
+                      <Zap size={20} className="text-purple-600" />
+                    </div>
+                    <div className="flex-1 space-y-2">
+                      <h3 className="font-semibold text-sm">Innovation Lab</h3>
+                      <p className="text-xs text-muted-foreground">
+                        10 startup ideas funded through BPN network
+                      </p>
+                      <Badge variant="secondary" className="text-xs">
+                        This Year
+                      </Badge>
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
+            </div>
           </div>
         </div>
       </ScrollArea>
-
-      <FloatingActionButton
-        type="post"
-        onClick={() => console.log("Create new post")}
-      />
     </div>
   );
 }
