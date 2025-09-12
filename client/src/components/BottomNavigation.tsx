@@ -72,13 +72,13 @@ export default function BottomNavigation() {
             ref={(el) => (tabsRef.current[index] = el)}
             data-testid={`tab-${tab.id}`}
             aria-label="Open more features"
-            className="flex items-center justify-center w-12 h-12 rounded-full transition-colors duration-200 ease-out"
+            className="flex items-center justify-center w-12 h-12 rounded-full transition-all duration-300 ease-out group"
           >
             <Icon 
               size={22} 
               className={cn(
-                "transition-colors duration-200 ease-out",
-                "text-zinc-400 hover:text-white"
+                "transition-all duration-300 ease-out transform-gpu",
+                "text-zinc-400 hover:text-white group-hover:scale-105 group-active:scale-95"
               )}
             />
           </button>
@@ -93,14 +93,16 @@ export default function BottomNavigation() {
         href={tab.path}
         data-testid={`tab-${tab.id}`}
         aria-current={isActive ? "page" : undefined}
-        className="flex items-center justify-center w-12 h-12 rounded-full transition-colors duration-200 ease-out relative"
+        className="flex items-center justify-center w-12 h-12 rounded-full transition-all duration-300 ease-out relative group"
       >
         <div ref={(el) => (tabsRef.current[index] = el)}>
           <Icon 
             size={22} 
             className={cn(
-              "transition-colors duration-200 ease-out",
-              isActive ? "text-white" : "text-zinc-400 hover:text-white"
+              "transition-all duration-300 ease-out transform-gpu",
+              isActive 
+                ? "text-white scale-105" 
+                : "text-zinc-400 hover:text-white group-hover:scale-105 group-active:scale-95"
             )}
           />
         </div>
