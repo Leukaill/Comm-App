@@ -116,10 +116,10 @@ export default function EventCard({
         <div className="space-y-3">
           {/* Title and Time */}
           <div>
-            <h3 className="font-semibold text-base sm:text-lg leading-tight mb-1">
+            <h3 className="font-semibold text-base sm:text-lg md:text-xl leading-tight mb-1 sm:mb-2">
               {title}
             </h3>
-            <p className="text-xs sm:text-sm text-muted-foreground">
+            <p className="text-xs sm:text-sm md:text-base text-muted-foreground">
               {time}
             </p>
           </div>

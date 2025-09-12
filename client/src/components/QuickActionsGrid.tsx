@@ -95,10 +95,10 @@ export default function QuickActionsGrid() {
     <div className="space-y-4">
       {/* Section header */}
       <div className="text-center space-y-2">
-        <h2 className="text-2xl font-bold bg-gradient-to-r from-primary to-primary/80 bg-clip-text text-transparent">
+        <h2 className="text-xl sm:text-2xl md:text-3xl font-bold bg-gradient-to-r from-primary to-primary/80 bg-clip-text text-transparent">
           Quick Actions
         </h2>
-        <p className="text-muted-foreground text-sm">
+        <p className="text-muted-foreground text-sm sm:text-base">
           Access key features instantly
         </p>
       </div>
@@ -142,10 +142,10 @@ export default function QuickActionsGrid() {
                     
                     {/* Content */}
                     <div className="space-y-1">
-                      <h3 className="font-semibold text-foreground text-sm sm:text-base">
+                      <h3 className="font-semibold text-foreground text-sm sm:text-base md:text-lg">
                         {action.title}
                       </h3>
-                      <p className="text-xs sm:text-sm text-muted-foreground">
+                      <p className="text-xs sm:text-sm md:text-base text-muted-foreground">
                         {action.subtitle}
                       </p>
                     </div>

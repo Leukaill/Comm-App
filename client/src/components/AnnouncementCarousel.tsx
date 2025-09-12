@@ -137,13 +137,13 @@ export default function AnnouncementCarousel() {
       <Card className="overflow-hidden bg-gradient-to-br from-card/95 to-card/80 backdrop-blur-sm border-border/50 shadow-2xl shadow-primary/10">
         <CardContent className="p-0 relative">
           {/* Main slide container */}
-          <div className="relative h-48 sm:h-64 md:h-80 lg:h-96 overflow-hidden">
+          <div className="relative h-48 sm:h-64 md:h-80 lg:h-96 overflow-hidden sm:[--slide-scale:1.02] md:[--slide-scale:1.04] lg:[--slide-scale:1.06]">
             {/* Background image with overlay */}
             <div 
               className="absolute inset-0 bg-cover bg-center transition-all duration-700 ease-in-out transform"
               style={{ 
                 backgroundImage: `url(${currentSlideData.image})`,
-                transform: `scale(${isAutoPlaying ? '1.05' : '1'})` 
+                transform: `scale(${isAutoPlaying ? 'var(--slide-scale, 1.04)' : '1'})` // Truly responsive scaling via CSS custom properties
               }}
             >
               <div className="absolute inset-0 bg-gradient-to-r from-black/70 via-black/40 to-transparent"></div>

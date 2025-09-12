@@ -20,9 +20,9 @@ export default function UserAvatar({
   className 
 }: UserAvatarProps) {
   const sizeClasses = {
-    sm: "h-8 w-8",
-    md: "h-10 w-10",
-    lg: "h-16 w-16"
+    sm: "h-8 w-8 sm:h-9 sm:w-9", // Responsive: slightly larger on small screens+
+    md: "h-10 w-10 sm:h-11 sm:w-11 md:h-12 md:w-12", // Responsive scaling
+    lg: "h-16 w-16 sm:h-[4.5rem] sm:w-[4.5rem] md:h-20 md:w-20" // Responsive scaling for large
   };
 
   const getInitials = (name: string) => {
