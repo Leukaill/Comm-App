@@ -10,7 +10,8 @@ import {
   ClipboardList, 
   History, 
   Users2,
-  Users
+  Users,
+  User
 } from "lucide-react";
 import { Link } from "wouter";
 
@@ -23,6 +24,18 @@ interface MoreDrawerProps {
 export default function MoreDrawer({ children, isOpen, onOpenChange }: MoreDrawerProps) {
   const menuItems = [
     {
+      category: "Account & Profile",
+      items: [
+        { 
+          id: "profile", 
+          path: "/profile", 
+          icon: User, 
+          label: "Profile", 
+          description: "Manage your account and personal information"
+        }
+      ]
+    },
+    {
       category: "Networking & Connections",
       items: [
         { 
@@ -31,18 +44,6 @@ export default function MoreDrawer({ children, isOpen, onOpenChange }: MoreDrawe
           icon: Users, 
           label: "Connect", 
           description: "Browse and connect with business professionals"
-        }
-      ]
-    },
-    {
-      category: "Documents & Notes",
-      items: [
-        { 
-          id: "notes", 
-          path: "/notes", 
-          icon: FileText, 
-          label: "Notes", 
-          description: "View announcements and important documents"
         }
       ]
     },
